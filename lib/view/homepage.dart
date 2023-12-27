@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gsc2024/view/calibration.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -25,12 +24,7 @@ class HomePage extends StatelessWidget {
               style: TextStyle(fontSize: 16),
             ),
             InkWell(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => CaLibrationPage()),
-                );
-              },
+              onTap: null,
               child: Container(
                 color: Colors.deepPurple,
                 padding: EdgeInsets.all(20),
