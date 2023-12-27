@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gsc2024/view/homepage.dart';
 import 'package:gsc2024/view/loginpage.dart';
+import 'package:gsc2024/view/signuppage.dart';
 
 void main() {
   runApp(const MyApp());

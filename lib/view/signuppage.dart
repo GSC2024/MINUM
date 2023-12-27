@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:gsc2024/model/constants.dart';
-import 'package:gsc2024/view/signuppage.dart';
 
 import 'components/textinputfield.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+class SignupPage extends StatelessWidget {
+  const SignupPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,13 +26,23 @@ class LoginPage extends StatelessWidget {
                   width: double.infinity,
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    'Login Akun',
+                    'Buat Akun',
                     style: TextStyle(
                       fontSize: 16,
                     ),
                   ),
                 ),
                 SizedBox(height: 12),
+                TextInputField(
+                  //controller: null, //TODO: add controller
+                  hintText: 'Nama Pertama',
+                ),
+                SizedBox(height: 20),
+                TextInputField(
+                  //controller: null, //TODO: add controller
+                  hintText: 'Nama Akhir',
+                ),
+                SizedBox(height: 20),
                 TextInputField(
                   //controller: null, //TODO: add controller
                   hintText: 'Email atau Nomor Telfon',
@@ -43,19 +52,12 @@ class LoginPage extends StatelessWidget {
                   //controller: null, //TODO: add controller
                   hintText: 'Kata Sandi',
                 ),
-                SizedBox(height: 8), //change from 4 (adjustment)
-                Container(
-                  width: double.infinity,
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'Lupa Kata Sandi?',
-                    style: TextStyle(
-                      fontSize: 12, //change from 10 (adjustment)
-                      color: AppColor.kButonColor,
-                    ),
-                  ),
+                SizedBox(height: 20),
+                TextInputField(
+                  //controller: null, //TODO: add controller
+                  hintText: 'isi ulang Kata Sandi',
                 ),
-                SizedBox(height: 37),
+                SizedBox(height: 56),
                 InkWell(
                   onTap: null, //TODO: add function
                   child: Container(
@@ -79,22 +81,11 @@ class LoginPage extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 44),
-                Text(
-                  'Masuk Menggunakan',
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: AppColor.kTextColor,
-                  ),
-                ),
-                SizedBox(height: 12),
-                Image.asset(
-                    'assets/images/google.png'), //TODO: replace with actual google signin from firebase
-                SizedBox(height: 44),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Belum memiliki akun?',
+                      'Sudah memiliki akun?',
                       style: TextStyle(
                         fontSize: 14,
                         color: AppColor.kTextColor,
@@ -102,13 +93,10 @@ class LoginPage extends StatelessWidget {
                     ),
                     TextButton(
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => SignupPage()),
-                        );
+                        Navigator.pop(context);
                       },
                       child: Text(
-                        'Daftar Sekarang!',
+                        'Login Sekarang!',
                         style: TextStyle(
                           fontSize: 14,
                           color: AppColor.kButonColor,
