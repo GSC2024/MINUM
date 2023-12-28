@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gsc2024/model/constants.dart';
+import 'package:gsc2024/view/homepage.dart';
 
 import 'components/textinputfield.dart';
 
@@ -59,7 +60,12 @@ class SignupPage extends StatelessWidget {
                 ),
                 SizedBox(height: 56),
                 InkWell(
-                  onTap: null, //TODO: add function
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => HomePage(),
+                    ),
+                  ), //TODO: add proper function
                   child: Container(
                     padding: EdgeInsets.symmetric(vertical: 16),
                     alignment: Alignment.center,
@@ -72,7 +78,7 @@ class SignupPage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(4),
                     ),
                     child: Text(
-                      'Masuk',
+                      'Buat Akun',
                       style: TextStyle(
                         color: AppColor.kBackgroundColor,
                         fontSize: 16,

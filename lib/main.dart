@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'MINUM',
       debugShowCheckedModeBanner: false,
-      home: const LoginPage(),
+      home: const HomePage(),
     );
   }
 }
