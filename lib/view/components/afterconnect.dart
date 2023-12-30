@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:gsc2024/view/components/historycard.dart';
+import 'package:gsc2024/view/components/homecard.dart';
+import 'package:gsc2024/view/components/homeicon.dart';
 import '../../model/constants.dart';
 
 class AfterConnectPage extends StatelessWidget {
   const AfterConnectPage({
     super.key,
+    required this.onTap,
   });
+
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +32,7 @@ class AfterConnectPage extends StatelessWidget {
               ),
               HomeIcon(
                 iconImage: SvgPicture.asset(
-                  width: 14,
+                  width: 20,
                   'assets/images/water.svg',
                 ),
                 iconText: 'Pengujian',
@@ -41,85 +47,67 @@ class AfterConnectPage extends StatelessWidget {
               ),
             ],
           ),
-          Container(
-            margin: EdgeInsets.only(top: 16),
-            padding: EdgeInsets.all(16),
-            height: 156,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: AppColor.kButonColor,
-              border: Border.all(color: AppColor.kTextColor, width: 1.6),
-              borderRadius: BorderRadius.circular(4),
+          HomeCard(
+            cardText: 'Uji Kelayakan \nAir Sekarang!',
+            onTap: onTap, // () {}, //TODO: Add onTap function
+          ),
+          SizedBox(height: 56),
+          Text(
+            'Data Kualitas Air',
+            style: TextStyle(
+              color: AppColor.kTextColor,
+              fontSize: 20,
+              fontFamily: 'Poppins',
+              fontWeight: FontWeight.w500,
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SvgPicture.asset(
-                      width: 31,
-                      'assets/images/arrow.svg',
-                    ),
-                    Text(
-                      'Uji Kelayakan \nAir Sekarang!',
-                      style: TextStyle(
-                        color: AppColor.kBackgroundColor,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 20,
-                      ),
-                    ),
-                  ],
+          ),
+          Container(
+            height: 170,
+            width: double.infinity,
+            color: Colors.grey,
+            alignment: Alignment.center,
+            child: Text(
+              'Chart',
+            ),
+          ),
+          SizedBox(height: 36),
+          Container(
+            height: 76,
+            width: double.infinity,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: <HistoryCard>[
+                HistoryCard(
+                  mainPercentage: 50,
+                  diffPercentage: '+ 10.4%',
+                  date: DateTime.now(),
                 ),
-                Image.asset(
-                  'assets/images/thermometer.png',
+                HistoryCard(
+                  mainPercentage: 50,
+                  diffPercentage: '+ 10.4%',
+                  date: DateTime.now(),
+                ),
+                HistoryCard(
+                  mainPercentage: 50,
+                  diffPercentage: '+ 10.4%',
+                  date: DateTime.now(),
+                ),
+                HistoryCard(
+                  mainPercentage: 50,
+                  diffPercentage: '+ 10.4%',
+                  date: DateTime.now(),
                 ),
               ],
             ),
           ),
-        ],
-      ),
-    );
-  }
-}
-
-class HomeIcon extends StatelessWidget {
-  HomeIcon({
-    super.key,
-    required this.iconText,
-    this.iconValue,
-    required this.iconImage,
-  });
-
-  final String iconText;
-  String? iconValue;
-  final SvgPicture iconImage;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          Row(
-            children: [
-              iconImage,
-              SizedBox(width: 8),
-              Text(
-                iconValue ?? '',
-                style: TextStyle(
-                  color: AppColor.kTextColor,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ],
-          ),
+          SizedBox(height: 24),
           Text(
-            iconText,
+            'Created with Hope & Love',
             style: TextStyle(
-              color: AppColor.kTextColor,
+              color: AppColor.kTextColor.withOpacity(0.3),
               fontSize: 14,
+              fontFamily: 'Poppins',
+              fontWeight: FontWeight.w400,
             ),
           ),
         ],

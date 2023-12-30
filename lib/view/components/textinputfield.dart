@@ -20,6 +20,7 @@ class TextInputField extends StatelessWidget {
         hintText: hintText,
         hintStyle: TextStyle(
           fontSize: 16,
+          fontFamily: 'Poppins',
           color: AppColor.kTextColor.withOpacity(0.5),
         ),
         //border around the textfield
