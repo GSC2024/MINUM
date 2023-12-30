@@ -29,6 +29,7 @@ class LoginPage extends StatelessWidget {
                   child: Text(
                     'Login Akun',
                     style: TextStyle(
+                      fontFamily: 'Poppins',
                       fontSize: 16,
                     ),
                   ),
@@ -43,18 +44,18 @@ class LoginPage extends StatelessWidget {
                   //controller: null, //TODO: add controller
                   hintText: 'Kata Sandi',
                 ),
-                SizedBox(height: 8), //change from 4 (adjustment)
-                Container(
-                  width: double.infinity,
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'Lupa Kata Sandi?',
-                    style: TextStyle(
-                      fontSize: 12, //change from 10 (adjustment)
-                      color: AppColor.kButonColor,
-                    ),
-                  ),
-                ),
+                // SizedBox(height: 8), //change from 4 (adjustment)
+                // Container(
+                //   width: double.infinity,
+                //   alignment: Alignment.centerLeft,
+                //   child: Text(
+                //     'Lupa Kata Sandi?',
+                //     style: TextStyle(
+                //       fontSize: 12, //change from 10 (adjustment)
+                //       color: AppColor.kButonColor,
+                //     ),
+                //   ),
+                // ),
                 SizedBox(height: 37),
                 InkWell(
                   onTap: null, //TODO: add function
@@ -74,6 +75,7 @@ class LoginPage extends StatelessWidget {
                       style: TextStyle(
                         color: AppColor.kBackgroundColor,
                         fontSize: 16,
+                        fontFamily: 'Poppins',
                       ),
                     ),
                   ),
@@ -83,6 +85,7 @@ class LoginPage extends StatelessWidget {
                   'Masuk Menggunakan',
                   style: TextStyle(
                     fontSize: 14,
+                    fontFamily: 'Poppins',
                     color: AppColor.kTextColor,
                   ),
                 ),
@@ -97,6 +100,7 @@ class LoginPage extends StatelessWidget {
                       'Belum memiliki akun?',
                       style: TextStyle(
                         fontSize: 14,
+                        fontFamily: 'Poppins',
                         color: AppColor.kTextColor,
                       ),
                     ),
@@ -110,6 +114,7 @@ class LoginPage extends StatelessWidget {
                       child: Text(
                         'Daftar Sekarang!',
                         style: TextStyle(
+                          fontFamily: 'Poppins',
                           fontSize: 14,
                           color: AppColor.kButonColor,
                         ),

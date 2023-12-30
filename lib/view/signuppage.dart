@@ -30,6 +30,7 @@ class SignupPage extends StatelessWidget {
                     'Buat Akun',
                     style: TextStyle(
                       fontSize: 16,
+                      fontFamily: 'Poppins',
                     ),
                   ),
                 ),
@@ -82,6 +83,7 @@ class SignupPage extends StatelessWidget {
                       style: TextStyle(
                         color: AppColor.kBackgroundColor,
                         fontSize: 16,
+                        fontFamily: 'Poppins',
                       ),
                     ),
                   ),
@@ -94,6 +96,7 @@ class SignupPage extends StatelessWidget {
                       'Sudah memiliki akun?',
                       style: TextStyle(
                         fontSize: 14,
+                        fontFamily: 'Poppins',
                         color: AppColor.kTextColor,
                       ),
                     ),
@@ -105,6 +108,7 @@ class SignupPage extends StatelessWidget {
                         'Login Sekarang!',
                         style: TextStyle(
                           fontSize: 14,
+                          fontFamily: 'Poppins',
                           color: AppColor.kButonColor,
                         ),
                       ),
