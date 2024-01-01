@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gsc2024/model/constants.dart';
+import 'package:gsc2024/view/components/pagebutton.dart';
 import 'package:gsc2024/view/signuppage.dart';
 
 import 'components/textinputfield.dart';
@@ -57,28 +58,10 @@ class LoginPage extends StatelessWidget {
                 //   ),
                 // ),
                 SizedBox(height: 37),
-                InkWell(
-                  onTap: null, //TODO: add function
-                  child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 16),
-                    alignment: Alignment.center,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: AppColor.kButonColor,
-                      border: Border.all(
-                        color: AppColor.kTextColor,
-                      ),
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    child: Text(
-                      'Masuk',
-                      style: TextStyle(
-                        color: AppColor.kBackgroundColor,
-                        fontSize: 16,
-                        fontFamily: 'Poppins',
-                      ),
-                    ),
-                  ),
+
+                PageButton(
+                  text: 'Masuk',
+                  onTap: () {}, //TODO: add function,
                 ),
                 SizedBox(height: 44),
                 Text(

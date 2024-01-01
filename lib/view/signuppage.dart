@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gsc2024/model/constants.dart';
+import 'package:gsc2024/view/components/pagebutton.dart';
 import 'package:gsc2024/view/homepage.dart';
 
 import 'components/textinputfield.dart';
@@ -60,34 +61,15 @@ class SignupPage extends StatelessWidget {
                   hintText: 'isi ulang Kata Sandi',
                 ),
                 SizedBox(height: 56),
-                InkWell(
+                PageButton(
+                  text: 'Buat Akun',
                   onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => HomePage(),
                     ),
-                  ), //TODO: add proper function
-                  child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 16),
-                    alignment: Alignment.center,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: AppColor.kButonColor,
-                      border: Border.all(
-                        color: AppColor.kTextColor,
-                      ),
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    child: Text(
-                      'Buat Akun',
-                      style: TextStyle(
-                        color: AppColor.kBackgroundColor,
-                        fontSize: 16,
-                        fontFamily: 'Poppins',
-                      ),
-                    ),
                   ),
-                ),
+                ), //TODO: add proper function
                 SizedBox(height: 44),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gsc2024/model/constants.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gsc2024/view/components/homecard.dart';
+import 'package:gsc2024/view/testpage.dart';
 import 'components/afterconnect.dart';
 
 class HomePage extends StatefulWidget {
@@ -78,7 +79,14 @@ class _HomePageState extends State<HomePage> {
               //AfterConnectPage(),
 
               isConnected == true
-                  ? AfterConnectPage(onTap: pressed)
+                  ? AfterConnectPage(
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => TestPage(),
+                        ),
+                      ),
+                    )
                   : HomeCard(
                       cardText: 'Sambungi \nAlat Sekarang!',
                       onTap: pressed, //TODO: Add onTap function
