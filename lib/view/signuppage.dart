@@ -91,7 +91,7 @@ class SignupPage extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 14,
                           fontFamily: 'Poppins',
-                          color: AppColor.kButonColor,
+                          color: AppColor.kButtonColor,
                         ),
                       ),
                     ),

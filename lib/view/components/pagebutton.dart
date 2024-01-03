@@ -20,7 +20,7 @@ class PageButton extends StatelessWidget {
         alignment: Alignment.center,
         width: double.infinity,
         decoration: BoxDecoration(
-          color: AppColor.kButonColor,
+          color: AppColor.kButtonColor,
           border: Border.all(
             color: AppColor.kTextColor,
           ),

@@ -99,7 +99,7 @@ class LoginPage extends StatelessWidget {
                         style: TextStyle(
                           fontFamily: 'Poppins',
                           fontSize: 14,
-                          color: AppColor.kButonColor,
+                          color: AppColor.kButtonColor,
                         ),
                       ),
                     ),

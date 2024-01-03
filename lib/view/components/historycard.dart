@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:gsc2024/model/constants.dart';
 import 'package:intl/intl.dart';
 
-class HistoryCard extends StatelessWidget {
-  const HistoryCard({
+class HistoryCard extends StatefulWidget {
+  HistoryCard({
     super.key,
     required this.mainPercentage,
     required this.date,
@@ -15,6 +15,11 @@ class HistoryCard extends StatelessWidget {
   final String diffPercentage;
 
   @override
+  State<HistoryCard> createState() => _HistoryCardState();
+}
+
+class _HistoryCardState extends State<HistoryCard> {
+  @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(right: 11),
@@ -23,7 +28,7 @@ class HistoryCard extends StatelessWidget {
       width: 160,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(4),
-        color: AppColor.kButonColor,
+        color: AppColor.kButtonColor,
         border: Border.all(
           color: AppColor.kTextColor,
           width: 1.60,
@@ -36,7 +41,7 @@ class HistoryCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                '${mainPercentage}%',
+                '${widget.mainPercentage}%',
                 style: TextStyle(
                   color: AppColor.kBackgroundColor,
                   fontSize: 20,
@@ -46,6 +51,7 @@ class HistoryCard extends StatelessWidget {
               ),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 3),
+                alignment: Alignment.center,
                 height: 21,
                 width: 58,
                 decoration: BoxDecoration(
@@ -53,10 +59,10 @@ class HistoryCard extends StatelessWidget {
                   color: Color(0xFF1F1F1F),
                 ),
                 child: Text(
-                  diffPercentage,
+                  widget.diffPercentage,
                   style: TextStyle(
                     color: Color(0xFFA1F99F),
-                    fontSize: 14,
+                    fontSize: 13,
                     fontFamily: 'Poppins',
                     fontWeight: FontWeight.w600,
                   ),
@@ -65,7 +71,7 @@ class HistoryCard extends StatelessWidget {
             ],
           ),
           Text(
-            '${DateFormat('dd MMMM').format(date)}',
+            '${DateFormat('dd MMMM').format(widget.date)}',
             style: TextStyle(
               color: AppColor.kBackgroundColor,
               fontSize: 16,

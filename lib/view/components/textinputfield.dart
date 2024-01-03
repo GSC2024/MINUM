@@ -31,7 +31,7 @@ class TextInputField extends StatelessWidget {
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: AppColor.kButonColor,
+            color: AppColor.kButtonColor,
             width: 2,
           ),
         ),

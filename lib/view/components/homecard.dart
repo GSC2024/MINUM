@@ -24,7 +24,7 @@ class HomeCard extends StatelessWidget {
         height: 156,
         width: double.infinity,
         decoration: BoxDecoration(
-          color: AppColor.kButonColor,
+          color: AppColor.kButtonColor,
           border: Border.all(color: AppColor.kTextColor, width: 1.6),
           borderRadius: BorderRadius.circular(4),
         ),
