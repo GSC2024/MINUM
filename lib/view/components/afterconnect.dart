@@ -71,30 +71,30 @@ class AfterConnectPage extends StatelessWidget {
             ),
           ),
           SizedBox(height: 36),
-          Container(
+          SizedBox(
             height: 76,
             width: double.infinity,
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: <HistoryCard>[
                 HistoryCard(
-                  mainPercentage: 50,
+                  mainPercentage: 58,
                   diffPercentage: '+ 10.4%',
                   date: DateTime.now(),
                 ),
                 HistoryCard(
-                  mainPercentage: 50,
-                  diffPercentage: '+ 10.4%',
+                  mainPercentage: 48,
+                  diffPercentage: '+ 13.0%',
                   date: DateTime.now(),
                 ),
                 HistoryCard(
-                  mainPercentage: 50,
-                  diffPercentage: '+ 10.4%',
+                  mainPercentage: 35,
+                  diffPercentage: '+ 8.1%',
                   date: DateTime.now(),
                 ),
                 HistoryCard(
-                  mainPercentage: 50,
-                  diffPercentage: '+ 10.4%',
+                  mainPercentage: 27,
+                  diffPercentage: '+ 27.0%',
                   date: DateTime.now(),
                 ),
               ],

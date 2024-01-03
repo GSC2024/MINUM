@@ -68,16 +68,6 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ],
               ),
-
-              //Before Connect
-              // HomeCard(
-              //   cardText: 'Sambungi \nAlat Sekarang!',
-              //   onTap: () {}, //TODO: Add onTap function
-              // ),
-
-              //After Connect
-              //AfterConnectPage(),
-
               isConnected == true
                   ? AfterConnectPage(
                       onTap: () => Navigator.push(
