@@ -139,16 +139,31 @@ class ProfilePage extends StatelessWidget {
               Column(
               children: [
                 ProfileButton(
-                  icon: Icon(Icons.person_rounded),
-                  text: "Personal Data",
+                   iconImage: SvgPicture.asset(
+                    width: 20,
+                    height: 20,
+                    'assets/images/pin-button.svg',
+                  ),
+                  text: "Personal Data", 
+                  icon: null, 
                 ),
                 ProfileButton(
-                  icon: Icon(Icons.person_rounded),
+                  iconImage: SvgPicture.asset(
+                    width: 20,
+                    height: 20,
+                    'assets/images/pin-button.svg',
+                  ),
                   text: "Device Information",
+                  icon: null,
                 ),
                 ProfileButton(
-                  icon: Icon(Icons.person_rounded),
-                  text: "Contance Center",
+                  iconImage: SvgPicture.asset(
+                    width: 20,
+                    height: 20,
+                    'assets/images/pin-button.svg',
+                  ),
+                  text: "Contact Center",
+                  icon: null,
                 ),
                   DottedLine(
                     direction: Axis.horizontal,

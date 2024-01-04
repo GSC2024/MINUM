@@ -1,12 +1,13 @@
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:gsc2024/model/constants.dart';
 
 class ProfileButton extends StatelessWidget {
   final String text;
-  final Icon icon;
+  final dynamic icon;
 
-  const ProfileButton({Key? key, required this.text, required this.icon})
+  const ProfileButton({Key? key, required this.text, required this.icon, required SvgPicture iconImage})
       : super(key: key);
 
   @override
