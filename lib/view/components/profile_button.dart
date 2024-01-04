@@ -7,7 +7,7 @@ class ProfileButton extends StatelessWidget {
   final String text;
   final dynamic icon;
 
-  const ProfileButton({Key? key, required this.text, required this.icon, required SvgPicture iconImage})
+  const ProfileButton({Key? key, required this.text, required this.icon})
       : super(key: key);
 
   @override
