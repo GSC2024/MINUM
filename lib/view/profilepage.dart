@@ -6,6 +6,7 @@ import 'package:gsc2024/view/components/profile_button.dart';
 import 'components/afterconnect.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:dotted_line/dotted_line.dart';
+import 'package:gsc2024/view/solutionpage.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -128,14 +129,33 @@ class ProfilePage extends StatelessWidget {
             //Button
             Column(
               children: [
-                ProfileButton(
-                  icon: SvgPicture.asset(
-                    width: 20,
-                    height: 20,
-                    'assets/images/battery.svg',
+                GestureDetector(
+                  onTap: () {
+                    // Navigate to solutionpage.dart
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SolutionPage()),
+                    );
+                  },
+                  child: ProfileButton(
+                    icon: SvgPicture.asset(
+                      'assets/images/profile.svg',
+                      width: 20,
+                      height: 20,
+                    ),
+                    text: "Personal Data",
                   ),
-                  text: "Personal Data",
                 ),
+
+                // Real code
+                // ProfileButton(
+                //   icon: SvgPicture.asset(
+                //     width: 20,
+                //     height: 20,
+                //     'assets/images/profile.svg',
+                //   ),
+                //   text: "Personal Data",
+                // ),
                 ProfileButton(
                   icon: SvgPicture.asset(
                     width: 20,
@@ -148,7 +168,7 @@ class ProfilePage extends StatelessWidget {
                   icon: SvgPicture.asset(
                     width: 20,
                     height: 20,
-                    'assets/images/pin-bottom.svg',
+                    'assets/images/whatsapp.svg',
                   ),
                   text: "Contact Center",
                 ),
