@@ -89,7 +89,12 @@ class _SignupPageState extends State<SignupPage> {
                 SizedBox(height: 56),
                 PageButton(
                   text: 'Buat Akun',
-                  onTap: _signUp,
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => HomePage(),
+                    ),
+                  ),
                 ), //TODO: add proper function
                 SizedBox(height: 44),
                 Row(
@@ -104,7 +109,7 @@ class _SignupPageState extends State<SignupPage> {
                       ),
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: _signUp,
                       child: Text(
                         'Login Sekarang!',
                         style: TextStyle(
@@ -130,19 +135,13 @@ class _SignupPageState extends State<SignupPage> {
     String email = emailController.text;
     String password = passwordController.text;
 
-    User? user =
-        await _auth.signUpWithEmailAndPassword(email, password, name, lastName);
+    User? user = await _auth.signUpWithEmailAndPassword(email, password);
 
     if (user != null) {
       print("User successfully created");
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => HomePage(),
-        ),
-      );
+      Navigator.pushNamed(context, '/homepage');
     } else {
-      print("An error happened");
+      print("an Error happened");
     }
   }
 }

@@ -3,6 +3,7 @@ import 'package:gsc2024/model/constants.dart';
 import 'package:gsc2024/view/components/pagebutton.dart';
 import 'package:gsc2024/view/components/testdetail.dart';
 import 'package:gsc2024/view/components/watercup.dart';
+import 'package:gsc2024/view/solutionpage.dart';
 
 class TestPage extends StatefulWidget {
   const TestPage({super.key});
@@ -65,7 +66,7 @@ class _TestPageState extends State<TestPage> {
                       Text(
                         '80%',
                         style: TextStyle(
-                          color: AppColor.kButonColor,
+                          color: AppColor.kButtonColor,
                           fontSize: 40,
                           fontFamily: 'Poppins',
                           fontWeight: FontWeight.w500,
@@ -82,9 +83,23 @@ class _TestPageState extends State<TestPage> {
                     ],
                   ),
                   SizedBox(width: 70),
-                  CustomPaint(
-                    painter: WaterCup(fillPercent: 0.5), // 50% filled
-                    size: Size(150, 200), // size of the cup
+                  Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      CustomPaint(
+                        painter: GlassPainter(
+                            0.8), // 80% filled //TODO: Make this the dynamic value
+                        size: Size(150, 200), // size of the cup
+                      ),
+                      Text(
+                        'Minum.',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 24,
+                          fontFamily: 'Archia',
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -121,7 +136,15 @@ class _TestPageState extends State<TestPage> {
               SizedBox(height: 36),
               PageButton(
                 text: 'Tangani Sekarang!',
-                onTap: () {}, //TODO: add proper function
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          SolutionPage(),
+                    ),
+                  );
+                },
               )
             ],
           ),

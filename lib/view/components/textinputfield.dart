@@ -6,16 +6,16 @@ class TextInputField extends StatelessWidget {
   const TextInputField({
     super.key,
     required this.hintText,
-    //required this.controller,
+    required this.controller,
   });
 
   final String hintText;
-  //final TextEditingController controller;
+  final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      //controller: controller,
+      controller: controller,
       decoration: InputDecoration(
         hintText: hintText,
         hintStyle: TextStyle(
@@ -31,7 +31,7 @@ class TextInputField extends StatelessWidget {
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: AppColor.kButonColor,
+            color: AppColor.kButtonColor,
             width: 2,
           ),
         ),
