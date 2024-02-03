@@ -1,12 +1,33 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:gsc2024/features/user_auth/firebase_auth_implementation/firebase_auth_service.dart';
 import 'package:gsc2024/model/constants.dart';
 import 'package:gsc2024/view/components/pagebutton.dart';
+import 'package:gsc2024/view/homepage.dart';
 import 'package:gsc2024/view/signuppage.dart';
 
 import 'components/textinputfield.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final FirebaseAuthService _auth = FirebaseAuthService();
+
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,12 +58,12 @@ class LoginPage extends StatelessWidget {
                 ),
                 SizedBox(height: 12),
                 TextInputField(
-                  //controller: null, //TODO: add controller
+                  controller: emailController,
                   hintText: 'Email atau Nomor Telfon',
                 ),
                 SizedBox(height: 20),
                 TextInputField(
-                  //controller: null, //TODO: add controller
+                  controller: passwordController, //TODO: add controller
                   hintText: 'Kata Sandi',
                 ),
                 // SizedBox(height: 8), //change from 4 (adjustment)
@@ -61,7 +82,7 @@ class LoginPage extends StatelessWidget {
 
                 PageButton(
                   text: 'Masuk',
-                  onTap: () {}, //TODO: add function,
+                  onTap: _signIn, //TODO: add function,
                 ),
                 SizedBox(height: 44),
                 Text(
@@ -99,7 +120,7 @@ class LoginPage extends StatelessWidget {
                         style: TextStyle(
                           fontFamily: 'Poppins',
                           fontSize: 14,
-                          color: AppColor.kButonColor,
+                          color: AppColor.kButtonColor,
                         ),
                       ),
                     ),
@@ -111,5 +132,24 @@ class LoginPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _signIn() async {
+    String email = emailController.text;
+    String password = passwordController.text;
+
+    User? user = await _auth.signInWithEmailAndPassword(email, password);
+
+    if (user != null) {
+      print("User successfully logged in");
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => HomePage(),
+        ),
+      );
+    } else {
+      print("An error happened");
+    }
   }
 }
