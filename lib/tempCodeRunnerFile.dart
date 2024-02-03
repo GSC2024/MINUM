@@ -8,4 +8,8 @@
       home: LoginPage(),
     );
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> d911cfffbef96ae213ab088f87fb71d677bacfef
