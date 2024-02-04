@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 
@@ -37,7 +39,7 @@ class FirebaseAuthService {
 
   Future<void> saveUserInfoToDatabase(
       String userId, String firstName, String lastName, String email) async {
-    final databaseReference = FirebaseDatabase.instance.reference();
+    final databaseReference = FirebaseDatabase.instance.ref();
 
     await databaseReference.child('users').child(userId).set({
       'firstName': firstName,
@@ -45,4 +47,15 @@ class FirebaseAuthService {
       'email': email,
     });
   }
+
+  String getUserId() {
+  final User? user = _auth.currentUser;
+  if (user != null) {
+    final uid = user.uid;
+    return uid;
+  } else {
+    throw Exception("User is not authenticated");
+  }
+}
+
 }

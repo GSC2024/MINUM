@@ -1,31 +1,16 @@
-// user_data.dart
-
-class SensorData {
-  final double ec;
-  final double ph;
-  final double tds;
-  final double temperature;
-
-  SensorData({
-    required this.ec,
-    required this.ph,
-    required this.tds,
-    required this.temperature,
-  });
-}
-
 class UserData {
-  final String userId;
-  final String email;
-  final String firstName;
-  final String lastName;
-  final SensorData sensorData;
+  final String? firstName;
+  final String? lastName;
+  final String? email;
+  final int? tds;
+  final int? temperature;
+  final int? ph;
+  final int? ec;
 
-  UserData({
-    required this.userId,
-    required this.email,
-    required this.firstName,
-    required this.lastName,
-    required this.sensorData,
-  });
+  UserData({this.firstName, this.lastName, this.email, this.tds, this.temperature, this.ph, this.ec});
+
+  @override
+  String toString() {
+    return 'UserData { firstName: $firstName, lastName: $lastName, email: $email, tds: $tds, temperature: $temperature, ph: $ph, ec: $ec }';
+  }
 }
