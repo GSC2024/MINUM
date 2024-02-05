@@ -4,15 +4,46 @@ import 'package:gsc2024/view/components/pagebutton.dart';
 import 'package:gsc2024/view/components/testdetail.dart';
 import 'package:gsc2024/view/components/watercup.dart';
 import 'package:gsc2024/view/solutionpage.dart';
+import '../features/data_fetch/data_service.dart';
+import '../features/user_data.dart';
 
 class TestPage extends StatefulWidget {
-  const TestPage({super.key});
+  final String userId;
+  const TestPage({Key? key, required this.userId}) : super(key: key);
 
   @override
   State<TestPage> createState() => _TestPageState();
 }
 
 class _TestPageState extends State<TestPage> {
+  late String userId;
+  final DataService _dataService = DataService();
+  UserData? userData;
+
+  @override
+  void initState() {
+    super.initState();
+    userId = widget.userId;
+    _fetchData(userId);
+  }
+
+  Future<void> _fetchData(userId) async {
+  try {
+    if (userId != null) {
+      UserData? fetchedUserData = await _dataService.fetchData(userId);
+      setState(() {
+        userData = fetchedUserData;
+      });
+
+      print('User Data: $userData');
+    } else {
+      print('User is not signed in or userId is null.');
+    }
+  } catch (error) {
+    print('Error fetching data: $error');
+  }
+}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,6 +92,7 @@ class _TestPageState extends State<TestPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  
                   Column(
                     children: [
                       Text(
@@ -116,22 +148,22 @@ class _TestPageState extends State<TestPage> {
               TestDetail(
                 detailTitle: 'Tingkat pH',
                 pointColor: Color(0xFFA1F99F),
-                detailValue: '6.8',
+                detailValue: userData?.ph.toString() ?? 'N/A',
               ),
               TestDetail(
                 detailTitle: 'Tingkat TDS',
                 pointColor: Color(0xFFF9D59F),
-                detailValue: '3 pmm',
+                detailValue: userData?.tds.toString() ?? 'N/A',
               ),
               TestDetail(
                 detailTitle: 'Tingkat Nitrat',
                 pointColor: Color(0xFFF99F9F),
-                detailValue: '125',
+                detailValue: userData?.temperature.toString() ?? 'N/A',
               ),
               TestDetail(
                 detailTitle: 'Tingkat Khlorida',
                 pointColor: Color(0xFFF8F99F),
-                detailValue: '2 pmm',
+                detailValue: userData?.ec.toString() ?? 'N/A',
               ),
               SizedBox(height: 36),
               PageButton(
@@ -141,7 +173,7 @@ class _TestPageState extends State<TestPage> {
                     context,
                     PageRouteBuilder(
                       pageBuilder: (context, animation, secondaryAnimation) =>
-                          SolutionPage(),
+                          SolutionPage(userId: userId),
                     ),
                   );
                 },
