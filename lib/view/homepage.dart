@@ -5,6 +5,7 @@ import 'package:gsc2024/view/components/homecard.dart';
 import 'package:gsc2024/view/testpage.dart';
 import '../features/data_fetch/data_service.dart';
 import '../features/user_data.dart';
+import 'package:gsc2024/view/profilepage.dart';
 import 'components/afterconnect.dart';
 
 class HomePage extends StatefulWidget {
@@ -89,14 +90,32 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ],
                   ),
-                  Container(
-                    width: 56,
-                    height: 56,
-                    decoration: ShapeDecoration(
-                      color: Colors.grey,
-                      shape: OvalBorder(side: BorderSide(width: 1.60)),
-                    ),
-                  ),
+                  isConnected == true
+                      ? InkWell(
+                          onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ProfilePage(),
+                            ),
+                          ),
+                          child: Container(
+                            width: 56,
+                            height: 56,
+                            decoration: ShapeDecoration(
+                              color: Colors.grey,
+                              shape: OvalBorder(side: BorderSide(width: 1.60)),
+                            ),
+                          ),
+                        )
+                      : Container(
+                          width: 56,
+                          height: 56,
+                          decoration: ShapeDecoration(
+                            color: Colors.grey,
+                            shape: OvalBorder(side: BorderSide(width: 1.60)),
+                          ),
+                        ),
+
                 ],
               ),
               isConnected == true
