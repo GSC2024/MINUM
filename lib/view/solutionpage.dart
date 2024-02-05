@@ -7,8 +7,21 @@ import 'package:gsc2024/view/homepage.dart';
 import 'package:gsc2024/view/testpage.dart';
 import 'package:dotted_line/dotted_line.dart';
 
-class SolutionPage extends StatelessWidget {
-  const SolutionPage({super.key});
+class SolutionPage extends StatefulWidget {
+  final String userId;
+  const SolutionPage({Key? key, required this.userId}) : super(key: key);
+
+  @override
+  State<SolutionPage> createState() => _SolutionPageState();
+}
+
+class _SolutionPageState extends State<SolutionPage> {
+  late String userId;
+  @override
+  void initState() {
+    super.initState();
+    userId = widget.userId;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -145,7 +158,7 @@ class SolutionPage extends StatelessWidget {
                     context,
                     PageRouteBuilder(
                       pageBuilder: (context, animation, secondaryAnimation) =>
-                          HomePage(),
+                          HomePage(userId: userId,),
                     ),
                   );
                 },

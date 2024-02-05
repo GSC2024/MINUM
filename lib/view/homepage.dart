@@ -3,17 +3,48 @@ import 'package:gsc2024/model/constants.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gsc2024/view/components/homecard.dart';
 import 'package:gsc2024/view/testpage.dart';
+import '../features/data_fetch/data_service.dart';
+import '../features/user_data.dart';
 import 'components/afterconnect.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({super.key});
+  final String userId; // Add userId as a property
+  HomePage({Key? key, required this.userId}) : super(key: key);
+
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+  late String userId; 
+  final DataService _dataService = DataService();
+  UserData? userData;
   bool isConnected = false;
+
+  @override
+  void initState() {
+    super.initState();
+    userId = widget.userId;
+    _fetchData(userId);
+  }
+
+  Future<void> _fetchData(userId) async {
+  try {
+    if (userId != null) {
+      UserData? fetchedUserData = await _dataService.fetchData(userId);
+      setState(() {
+        userData = fetchedUserData;
+      });
+
+      print('User Data: $userData');
+    } else {
+      print('User is not signed in or userId is null.');
+    }
+  } catch (error) {
+    print('Error fetching data: $error');
+  }
+}
 
   void pressed() {
     setState(() {
@@ -48,7 +79,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       SizedBox(height: 4),
                       Text(
-                        'Aryiana',
+                        "${userData?.firstName} ${userData?.lastName}" ,
                         style: TextStyle(
                           color: AppColor.kTextColor,
                           fontWeight: FontWeight.w500,
@@ -73,7 +104,7 @@ class _HomePageState extends State<HomePage> {
                       onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => TestPage(),
+                          builder: (context) => TestPage(userId: userId),
                         ),
                       ),
                     )

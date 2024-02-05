@@ -4,35 +4,33 @@ import 'package:gsc2024/view/components/pagebutton.dart';
 import 'package:gsc2024/view/components/testdetail.dart';
 import 'package:gsc2024/view/components/watercup.dart';
 import 'package:gsc2024/view/solutionpage.dart';
-
 import '../features/data_fetch/data_service.dart';
-import '../features/user_auth/firebase_auth_implementation/firebase_auth_service.dart';
 import '../features/user_data.dart';
 
 class TestPage extends StatefulWidget {
-  const TestPage({Key? key}) : super(key: key);
+  final String userId;
+  const TestPage({Key? key, required this.userId}) : super(key: key);
 
   @override
   State<TestPage> createState() => _TestPageState();
 }
 
 class _TestPageState extends State<TestPage> {
+  late String userId;
   final DataService _dataService = DataService();
-  final userId = '6ybp4JLZ4Ab9e5S4ygnKlGCmlD62';
   UserData? userData;
 
   @override
   void initState() {
     super.initState();
-    _fetchData();
+    userId = widget.userId;
+    _fetchData(userId);
   }
 
-  Future<void> _fetchData() async {
+  Future<void> _fetchData(userId) async {
   try {
     if (userId != null) {
       UserData? fetchedUserData = await _dataService.fetchData(userId);
-
-      // Use setState to trigger a rebuild when the data is available
       setState(() {
         userData = fetchedUserData;
       });
@@ -91,14 +89,6 @@ class _TestPageState extends State<TestPage> {
                 ],
               ),
               const SizedBox(height: 73),
-              Text(
-                'User ID: $userId',
-                style: TextStyle(
-                  color: AppColor.kTextColor,
-                  fontSize: 16,
-                  fontFamily: 'Poppins',
-                ),
-              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -183,7 +173,7 @@ class _TestPageState extends State<TestPage> {
                     context,
                     PageRouteBuilder(
                       pageBuilder: (context, animation, secondaryAnimation) =>
-                          SolutionPage(),
+                          SolutionPage(userId: userId),
                     ),
                   );
                 },

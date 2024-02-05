@@ -138,14 +138,15 @@ class _LoginPageState extends State<LoginPage> {
     String email = emailController.text;
     String password = passwordController.text;
 
-    User? user = await _auth.signInWithEmailAndPassword(email, password);
+    Map<String, dynamic>? user = await _auth.signInWithEmailAndPassword(email, password);
 
     if (user != null) {
+      String userIds = user['userId'];
       print("User successfully logged in");
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => HomePage(),
+          builder: (context) => HomePage(userId:userIds),
         ),
       );
     } else {

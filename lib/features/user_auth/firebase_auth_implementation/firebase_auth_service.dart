@@ -6,7 +6,7 @@ import 'package:firebase_database/firebase_database.dart';
 class FirebaseAuthService {
   FirebaseAuth _auth = FirebaseAuth.instance;
 
-  Future<User?> signUpWithEmailAndPassword(
+  Future<Map<String, dynamic>?> signUpWithEmailAndPassword(
       String email, String password, String firstName, String lastName) async {
     try {
       UserCredential credential = await _auth.createUserWithEmailAndPassword(
@@ -16,21 +16,23 @@ class FirebaseAuthService {
       if (credential.user != null) {
         await saveUserInfoToDatabase(
             credential.user!.uid, firstName, lastName, email);
+        return {'user': credential.user, 'userId': credential.user!.uid};
       }
-
-      return credential.user;
     } catch (e) {
       print("Error Sign Up");
     }
     return null;
   }
 
-  Future<User?> signInWithEmailAndPassword(
+  Future<Map<String, dynamic>?> signInWithEmailAndPassword(
       String email, String password) async {
     try {
       UserCredential credential = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
-      return credential.user;
+
+      if (credential.user != null) {
+        return {'user': credential.user, 'userId': credential.user!.uid};
+      }
     } catch (e) {
       print("Error Sign In");
     }
@@ -47,15 +49,4 @@ class FirebaseAuthService {
       'email': email,
     });
   }
-
-  String getUserId() {
-  final User? user = _auth.currentUser;
-  if (user != null) {
-    final uid = user.uid;
-    return uid;
-  } else {
-    throw Exception("User is not authenticated");
-  }
-}
-
 }
