@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "844517950047",
+    "firebase_url": "https://esp32-watergsc-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "esp32-watergsc",
+    "storage_bucket": "esp32-watergsc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:844517950047:android:454c74eaa901bad54551ea",
+        "android_client_info": {
+          "package_name": "com.example.gsc2024"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDO72Fp-UYjS05Z0WeLPboL20ztsgBz9Fw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

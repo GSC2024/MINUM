@@ -1,15 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:gsc2024/view/homepage.dart';
-import 'package:gsc2024/view/loginpage.dart';
-import 'package:gsc2024/view/signuppage.dart';
-
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
+Widget build(BuildContext context) {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
