@@ -134,7 +134,8 @@ class ProfilePage extends StatelessWidget {
                     // Navigate to solutionpage.dart
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => SolutionPage()),
+                      MaterialPageRoute(
+                          builder: (context) => SolutionPage(userId: "1")),
                     );
                   },
                   child: ProfileButton(
