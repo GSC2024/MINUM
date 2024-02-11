@@ -95,7 +95,7 @@ class _HomePageState extends State<HomePage> {
                           onTap: () => Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => ProfilePage(),
+                              builder: (context) => ProfilePage(userId: userId,),
                             ),
                           ),
                           child: Container(
