@@ -11,12 +11,42 @@ class SolutionDetail extends StatelessWidget {
     required this.pointColor,
     required this.title,
     required this.userId,
+    required this.step,
   });
 
   final String title;
   final Color pointColor;
-  final String value;
+  final double value;
   final String userId;
+  final int step;
+
+  String getMessage(String title, double value) {
+    if (title == 'pH') {
+      if (value >= 6.5 && value <= 8.5) {
+        return 'Safe to drink waterzz';
+      } else if (value >= 6 && value <= 9) {
+        return 'Value is greater than 6 and less than 9';
+      } else {
+        return 'Value is not greater than 6 and less than 9';
+      }
+    } else if (title == 'TDS Levels') {
+      if (value >= 50 && value <= 150) {
+        return 'Safe to drink waterzz';
+      } else if (value >= 151 && value <= 250) {
+        return 'Yellow';
+      } else {
+        return 'Red and unsage';
+      }
+    } else {
+      if (value >= 300 && value <= 400) {
+        return 'Safe to drink waterzz';
+      } else if (value >= 401 && value <= 600) {
+        return 'Yellow';
+      } else {
+        return 'Red and unsage';
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +60,7 @@ class SolutionDetail extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 SolutionStep(
-                  text: 'Step 1',
+                  text: 'Step ${step}',
                   isActive: true,
                 ),
                 SizedBox(height: 56),
@@ -58,7 +88,11 @@ class SolutionDetail extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      value,
+                      title == 'TDS Levels'
+                          ? '$value PPM'
+                          : (title == 'ORP Levels'
+                              ? '$value mv'
+                              : value.toString()),
                       style: TextStyle(
                         color: AppColor.kTextColor,
                         fontSize: 16,
@@ -69,7 +103,8 @@ class SolutionDetail extends StatelessWidget {
                 ),
                 SizedBox(height: 40),
                 Text(
-                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. \n\nDuis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+                  getMessage(title, value),
+                  //'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. \n\nDuis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 12,

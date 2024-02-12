@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:gsc2024/model/constants.dart';
 import 'package:gsc2024/view/components/pagebutton.dart';
@@ -18,6 +20,7 @@ class SolutionPage extends StatefulWidget {
 
 class _SolutionPageState extends State<SolutionPage> {
   late String userId;
+
   @override
   void initState() {
     super.initState();
@@ -40,7 +43,16 @@ class _SolutionPageState extends State<SolutionPage> {
                     flex: 1,
                     child: InkWell(
                       onTap: () {
-                        Navigator.pop(context);
+                        Navigator.push(
+                          context,
+                          PageRouteBuilder(
+                            pageBuilder:
+                                (context, animation, secondaryAnimation) =>
+                                    TestPage(
+                              userId: userId,
+                            ),
+                          ),
+                        );
                       },
                       child: Icon(
                         Icons.arrow_back,
@@ -68,28 +80,6 @@ class _SolutionPageState extends State<SolutionPage> {
                   ),
                 ],
               ),
-              //const SizedBox(height: 36),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              //   children: [
-              //     SolutionStep(
-              //       text: 'Step 1',
-              //       isActive: true,
-              //     ),
-              //     SolutionStep(
-              //       text: 'Step 2',
-              //       isActive: false,
-              //     ),
-              //     SolutionStep(
-              //       text: 'Step 3',
-              //       isActive: false,
-              //     ),
-              //     SolutionStep(
-              //       text: 'Step 4',
-              //       isActive: false,
-              //     ),
-              //   ],
-              // ),
               const SizedBox(height: 94), //58
               Row(
                 children: [
@@ -115,13 +105,6 @@ class _SolutionPageState extends State<SolutionPage> {
                         SolutionDot(
                           isActive: false,
                         ),
-                        DottedLine(
-                          direction: Axis.vertical,
-                          lineLength: 103,
-                        ),
-                        SolutionDot(
-                          isActive: false,
-                        ),
                         SizedBox(height: 36),
                       ],
                     ),
@@ -132,35 +115,32 @@ class _SolutionPageState extends State<SolutionPage> {
                       children: [
                         SolutionCardDetail(
                           userId: userId,
-                          title: 'Nitrate Levels',
-                          pointColor: Color(0xFFF99F9F),
-                          value: '3 pmm',
+                          title: 'pH',
+                          pointColor: AppColor.kDangerColor,
+                          value: 6.8,
                           isActive: true,
-                        ),
-                        SolutionCardDetail(
-                          userId: userId,
-                          title: 'Chlorine Levels',
-                          pointColor: Color(0xFFF8F99F),
-                          value: '2 pmm',
+                          step: 1,
                         ),
                         SolutionCardDetail(
                           userId: userId,
                           title: 'TDS Levels',
                           pointColor: Color(0xFFF9D59F),
-                          value: '125',
+                          value: 125,
+                          step: 3,
                         ),
                         SolutionCardDetail(
                           userId: userId,
-                          title: 'pH',
-                          pointColor: Color(0xFF9FF9A3),
-                          value: '6.8',
+                          title: 'ORP Levels',
+                          pointColor: AppColor.kSafeColor,
+                          value: 350,
+                          step: 4,
                         ),
                       ],
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 142),
               PageButton(
                 text: 'Retest Water!',
                 onTap: () {
@@ -191,13 +171,15 @@ class SolutionCardDetail extends StatelessWidget {
     required this.pointColor,
     required this.value,
     this.isActive,
+    required this.step,
   });
 
   final String userId;
   final String title;
   final Color pointColor;
-  final String value;
+  final double value;
   final bool? isActive;
+  final int step;
 
   @override
   Widget build(BuildContext context) {
@@ -205,7 +187,10 @@ class SolutionCardDetail extends StatelessWidget {
       text: title,
       isActive: isActive ?? false,
       pointColor: pointColor,
-      value: value,
+      //if title is Nitrate Levels or Chlorine Levels the string will be "${value} pmm" else it will be "${value
+      value: title == 'TDS Levels'
+          ? '${value} PPM'
+          : (title == 'ORP Levels' ? '$value mv' : value.toString()),
       onTap: () {
         Navigator.push(
           context,
@@ -216,6 +201,7 @@ class SolutionCardDetail extends StatelessWidget {
               value: value,
               pointColor: pointColor,
               userId: userId,
+              step: step,
             ),
           ),
         );

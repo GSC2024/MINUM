@@ -3,6 +3,7 @@ import 'package:gsc2024/model/constants.dart';
 import 'package:gsc2024/view/components/pagebutton.dart';
 import 'package:gsc2024/view/components/testdetail.dart';
 import 'package:gsc2024/view/components/watercup.dart';
+import 'package:gsc2024/view/homepage.dart';
 import 'package:gsc2024/view/solutionpage.dart';
 import '../features/data_fetch/data_service.dart';
 import '../features/user_data.dart';
@@ -28,21 +29,21 @@ class _TestPageState extends State<TestPage> {
   }
 
   Future<void> _fetchData(userId) async {
-  try {
-    if (userId != null) {
-      UserData? fetchedUserData = await _dataService.fetchData(userId);
-      setState(() {
-        userData = fetchedUserData;
-      });
+    try {
+      if (userId != null) {
+        UserData? fetchedUserData = await _dataService.fetchData(userId);
+        setState(() {
+          userData = fetchedUserData;
+        });
 
-      print('User Data: $userData');
-    } else {
-      print('User is not signed in or userId is null.');
+        print('User Data: $userData');
+      } else {
+        print('User is not signed in or userId is null.');
+      }
+    } catch (error) {
+      print('Error fetching data: $error');
     }
-  } catch (error) {
-    print('Error fetching data: $error');
   }
-}
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +61,16 @@ class _TestPageState extends State<TestPage> {
                     flex: 1,
                     child: InkWell(
                       onTap: () {
-                        Navigator.pop(context);
+                        Navigator.push(
+                          context,
+                          PageRouteBuilder(
+                            pageBuilder:
+                                (context, animation, secondaryAnimation) =>
+                                    HomePage(
+                              userId: userId,
+                            ),
+                          ),
+                        );
                       },
                       child: Icon(
                         Icons.arrow_back,
@@ -92,7 +102,6 @@ class _TestPageState extends State<TestPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  
                   Column(
                     children: [
                       Text(
