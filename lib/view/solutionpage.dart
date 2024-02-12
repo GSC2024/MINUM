@@ -4,6 +4,7 @@ import 'package:gsc2024/view/components/pagebutton.dart';
 import 'package:gsc2024/view/components/solutioncard.dart';
 import 'package:gsc2024/view/components/solutionstep.dart';
 import 'package:gsc2024/view/homepage.dart';
+import 'package:gsc2024/view/solutiondetail.dart';
 import 'package:gsc2024/view/testpage.dart';
 import 'package:dotted_line/dotted_line.dart';
 
@@ -67,29 +68,29 @@ class _SolutionPageState extends State<SolutionPage> {
                   ),
                 ],
               ),
-              const SizedBox(height: 36),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  SolutionStep(
-                    text: 'Step 1',
-                    isActive: true,
-                  ),
-                  SolutionStep(
-                    text: 'Step 2',
-                    isActive: false,
-                  ),
-                  SolutionStep(
-                    text: 'Step 3',
-                    isActive: false,
-                  ),
-                  SolutionStep(
-                    text: 'Step 4',
-                    isActive: false,
-                  ),
-                ],
-              ),
-              const SizedBox(height: 58),
+              //const SizedBox(height: 36),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              //   children: [
+              //     SolutionStep(
+              //       text: 'Step 1',
+              //       isActive: true,
+              //     ),
+              //     SolutionStep(
+              //       text: 'Step 2',
+              //       isActive: false,
+              //     ),
+              //     SolutionStep(
+              //       text: 'Step 3',
+              //       isActive: false,
+              //     ),
+              //     SolutionStep(
+              //       text: 'Step 4',
+              //       isActive: false,
+              //     ),
+              //   ],
+              // ),
+              const SizedBox(height: 94), //58
               Row(
                 children: [
                   Expanded(
@@ -129,21 +130,30 @@ class _SolutionPageState extends State<SolutionPage> {
                     flex: 3,
                     child: Column(
                       children: [
-                        SolutionCard(
-                          text: 'Nitrate Levels',
+                        SolutionCardDetail(
+                          userId: userId,
+                          title: 'Nitrate Levels',
+                          pointColor: Color(0xFFF99F9F),
+                          value: '3 pmm',
                           isActive: true,
                         ),
-                        SolutionCard(
-                          text: 'Chlorine Levels',
-                          isActive: false,
+                        SolutionCardDetail(
+                          userId: userId,
+                          title: 'Chlorine Levels',
+                          pointColor: Color(0xFFF8F99F),
+                          value: '2 pmm',
                         ),
-                        SolutionCard(
-                          text: 'TDS Levels',
-                          isActive: false,
+                        SolutionCardDetail(
+                          userId: userId,
+                          title: 'TDS Levels',
+                          pointColor: Color(0xFFF9D59F),
+                          value: '125',
                         ),
-                        SolutionCard(
-                          text: 'pH',
-                          isActive: false,
+                        SolutionCardDetail(
+                          userId: userId,
+                          title: 'pH',
+                          pointColor: Color(0xFF9FF9A3),
+                          value: '6.8',
                         ),
                       ],
                     ),
@@ -158,15 +168,58 @@ class _SolutionPageState extends State<SolutionPage> {
                     context,
                     PageRouteBuilder(
                       pageBuilder: (context, animation, secondaryAnimation) =>
-                          HomePage(userId: userId,),
+                          HomePage(
+                        userId: userId,
+                      ),
                     ),
                   );
                 },
-              )
+              ),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class SolutionCardDetail extends StatelessWidget {
+  const SolutionCardDetail({
+    super.key,
+    required this.userId,
+    required this.title,
+    required this.pointColor,
+    required this.value,
+    this.isActive,
+  });
+
+  final String userId;
+  final String title;
+  final Color pointColor;
+  final String value;
+  final bool? isActive;
+
+  @override
+  Widget build(BuildContext context) {
+    return SolutionCard(
+      text: title,
+      isActive: isActive ?? false,
+      pointColor: pointColor,
+      value: value,
+      onTap: () {
+        Navigator.push(
+          context,
+          PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                SolutionDetail(
+              title: title,
+              value: value,
+              pointColor: pointColor,
+              userId: userId,
+            ),
+          ),
+        );
+      },
     );
   }
 }
