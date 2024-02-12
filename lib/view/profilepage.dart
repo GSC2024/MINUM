@@ -3,13 +3,49 @@ import 'package:flutter_svg/svg.dart';
 import 'package:gsc2024/model/constants.dart';
 import 'package:gsc2024/view/testpage.dart';
 import 'package:gsc2024/view/components/profile_button.dart';
+import '../features/data_fetch/data_service.dart';
+import '../features/user_data.dart';
 import 'components/afterconnect.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:gsc2024/view/solutionpage.dart';
 
-class ProfilePage extends StatelessWidget {
-  const ProfilePage({super.key});
+class ProfilePage extends StatefulWidget {
+  final String userId;
+  const ProfilePage({Key? key, required this.userId}) : super(key: key);
+
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  late String userId;
+  final DataService _dataService = DataService();
+  UserData? userData;
+
+  @override
+  void initState() {
+    super.initState();
+    userId = widget.userId;
+    _fetchData(userId);
+  }
+
+  Future<void> _fetchData(userId) async {
+    try {
+      if (userId != null) {
+        UserData? fetchedUserData = await _dataService.fetchData(userId);
+        setState(() {
+          userData = fetchedUserData;
+        });
+
+        print('User Data: $userData');
+      } else {
+        print('User is not signed in or userId is null.');
+      }
+    } catch (error) {
+      print('Error fetching data: $error');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +121,7 @@ class ProfilePage extends StatelessWidget {
                       Padding(
                         padding: EdgeInsets.only(top: 36),
                         child: Text(
-                          'Aryiana',
+                          '${userData?.firstName} ${userData?.lastName}',
                           style: TextStyle(
                             color: AppColor.kTextColor,
                             fontWeight: FontWeight.w500,
@@ -135,7 +171,9 @@ class ProfilePage extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => SolutionPage(userId: "1")),
+                          builder: (context) => SolutionPage(
+                                userId: userId,
+                              )),
                     );
                   },
                   child: ProfileButton(
