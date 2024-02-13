@@ -12,7 +12,16 @@ import 'package:dotted_line/dotted_line.dart';
 
 class SolutionPage extends StatefulWidget {
   final String userId;
-  const SolutionPage({Key? key, required this.userId}) : super(key: key);
+  final double? ph;
+  final double? tds;
+  final double? orp;
+  const SolutionPage({
+    Key? key,
+    required this.userId,
+    this.ph,
+    this.tds,
+    this.orp,
+  }) : super(key: key);
 
   @override
   State<SolutionPage> createState() => _SolutionPageState();
@@ -20,11 +29,53 @@ class SolutionPage extends StatefulWidget {
 
 class _SolutionPageState extends State<SolutionPage> {
   late String userId;
+  late double ph;
+  late double tds;
+  late double orp;
+  late Color phColor;
+  late Color tdsColor;
+  late Color orpColor;
 
   @override
   void initState() {
     super.initState();
     userId = widget.userId;
+    ph = widget.ph!;
+    tds = widget.tds!;
+    orp = widget.orp!;
+    phColor = getDangerLevelph(ph);
+    tdsColor = getDangerLeveltds(tds);
+    orpColor = getDangerLevelorp(orp);
+  }
+
+  Color getDangerLevelph(double value) {
+    if (value >= 6.5 && value <= 8.5) {
+      return AppColor.kSafeColor;
+    } else if (value >= 6 && value <= 9) {
+      return AppColor.kWarningColor;
+    } else {
+      return AppColor.kDangerColor;
+    }
+  }
+
+  Color getDangerLeveltds(double value) {
+    if (value >= 50 && value <= 150) {
+      return AppColor.kSafeColor;
+    } else if (value >= 151 && value <= 250) {
+      return AppColor.kWarningColor;
+    } else {
+      return AppColor.kDangerColor;
+    }
+  }
+
+  Color getDangerLevelorp(double value) {
+    if (value >= 300 && value <= 400) {
+      return AppColor.kSafeColor;
+    } else if (value >= 401 && value <= 600) {
+      return AppColor.kWarningColor;
+    } else {
+      return AppColor.kDangerColor;
+    }
   }
 
   @override
@@ -115,32 +166,32 @@ class _SolutionPageState extends State<SolutionPage> {
                       children: [
                         SolutionCardDetail(
                           userId: userId,
-                          title: 'pH',
-                          pointColor: AppColor.kDangerColor,
-                          value: 6.8,
+                          title: 'Tingkat pH',
+                          pointColor: phColor,
+                          value: ph,
                           isActive: true,
                           step: 1,
                         ),
                         SolutionCardDetail(
                           userId: userId,
-                          title: 'TDS Levels',
-                          pointColor: Color(0xFFF9D59F),
-                          value: 125,
-                          step: 3,
+                          title: 'Tingkat TDS',
+                          pointColor: tdsColor,
+                          value: tds,
+                          step: 2,
                         ),
                         SolutionCardDetail(
                           userId: userId,
-                          title: 'ORP Levels',
-                          pointColor: AppColor.kSafeColor,
-                          value: 350,
-                          step: 4,
+                          title: 'Tingkat ORP',
+                          pointColor: orpColor,
+                          value: orp,
+                          step: 3,
                         ),
                       ],
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 142),
+              const SizedBox(height: 172),
               PageButton(
                 text: 'Retest Water!',
                 onTap: () {
@@ -188,9 +239,9 @@ class SolutionCardDetail extends StatelessWidget {
       isActive: isActive ?? false,
       pointColor: pointColor,
       //if title is Nitrate Levels or Chlorine Levels the string will be "${value} pmm" else it will be "${value
-      value: title == 'TDS Levels'
+      value: title == 'Tingkat TDS'
           ? '${value} PPM'
-          : (title == 'ORP Levels' ? '$value mv' : value.toString()),
+          : (title == 'Tingkat ORP' ? '$value mv' : value.toString()),
       onTap: () {
         Navigator.push(
           context,

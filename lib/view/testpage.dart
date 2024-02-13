@@ -165,16 +165,11 @@ class _TestPageState extends State<TestPage> {
                 detailValue: userData?.tds.toString() ?? 'N/A',
               ),
               TestDetail(
-                detailTitle: 'Tingkat Nitrat',
+                detailTitle: 'Tingkat ORP',
                 pointColor: Color(0xFFF99F9F),
                 detailValue: userData?.temperature.toString() ?? 'N/A',
               ),
-              TestDetail(
-                detailTitle: 'Tingkat Khlorida',
-                pointColor: Color(0xFFF8F99F),
-                detailValue: userData?.ec.toString() ?? 'N/A',
-              ),
-              SizedBox(height: 36),
+              SizedBox(height: 100),
               PageButton(
                 text: 'Tangani Sekarang!',
                 onTap: () {
@@ -182,7 +177,12 @@ class _TestPageState extends State<TestPage> {
                     context,
                     PageRouteBuilder(
                       pageBuilder: (context, animation, secondaryAnimation) =>
-                          SolutionPage(userId: userId),
+                          SolutionPage(
+                        userId: userId,
+                        ph: userData?.ph?.toDouble() ?? 0,
+                        tds: userData?.tds?.toDouble() ?? 0,
+                        orp: userData?.temperature?.toDouble() ?? 0,
+                      ),
                     ),
                   );
                 },

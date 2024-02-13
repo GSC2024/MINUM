@@ -5,45 +5,46 @@ import 'package:gsc2024/view/components/solutionstep.dart';
 import 'package:gsc2024/view/solutionpage.dart';
 
 class SolutionDetail extends StatelessWidget {
-  const SolutionDetail({
-    super.key,
-    required this.value,
-    required this.pointColor,
-    required this.title,
-    required this.userId,
-    required this.step,
-  });
+  const SolutionDetail(
+      {super.key,
+      required this.value,
+      required this.pointColor,
+      required this.title,
+      required this.userId,
+      required this.step,
+      this.ph});
 
   final String title;
   final Color pointColor;
   final double value;
   final String userId;
   final int step;
+  final double? ph;
 
   String getMessage(String title, double value) {
-    if (title == 'pH') {
+    if (title == 'Tingkat pH') {
       if (value >= 6.5 && value <= 8.5) {
-        return 'Safe to drink waterzz';
+        return 'Air Bagus';
       } else if (value >= 6 && value <= 9) {
-        return 'Value is greater than 6 and less than 9';
+        return 'Air B aja';
       } else {
-        return 'Value is not greater than 6 and less than 9';
+        return 'Air jelek ';
       }
-    } else if (title == 'TDS Levels') {
+    } else if (title == 'Tingkat TDS') {
       if (value >= 50 && value <= 150) {
-        return 'Safe to drink waterzz';
+        return 'Air Bagus';
       } else if (value >= 151 && value <= 250) {
-        return 'Yellow';
+        return 'Air B aja';
       } else {
-        return 'Red and unsage';
+        return 'Air jelek ';
       }
     } else {
       if (value >= 300 && value <= 400) {
-        return 'Safe to drink waterzz';
+        return 'Air Bagus';
       } else if (value >= 401 && value <= 600) {
-        return 'Yellow';
+        return 'Air B aja';
       } else {
-        return 'Red and unsage';
+        return 'Air jelek ';
       }
     }
   }
@@ -88,9 +89,9 @@ class SolutionDetail extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      title == 'TDS Levels'
+                      title == 'Tingkat TDS'
                           ? '$value PPM'
-                          : (title == 'ORP Levels'
+                          : (title == 'Tingkat ORP'
                               ? '$value mv'
                               : value.toString()),
                       style: TextStyle(
@@ -122,7 +123,10 @@ class SolutionDetail extends StatelessWidget {
                   context,
                   PageRouteBuilder(
                     pageBuilder: (context, animation, secondaryAnimation) =>
-                        SolutionPage(userId: userId),
+                        SolutionPage(
+                      userId: userId,
+                      ph: ph,
+                    ),
                   ),
                 );
               },
