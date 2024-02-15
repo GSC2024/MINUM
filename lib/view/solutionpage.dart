@@ -15,12 +15,14 @@ class SolutionPage extends StatefulWidget {
   final double? ph;
   final double? tds;
   final double? orp;
+  final double? turbidity;
   const SolutionPage({
     Key? key,
     required this.userId,
     this.ph,
     this.tds,
     this.orp,
+    this.turbidity,
   }) : super(key: key);
 
   @override
@@ -32,9 +34,11 @@ class _SolutionPageState extends State<SolutionPage> {
   late double ph;
   late double tds;
   late double orp;
+  late double turbidity;
   late Color phColor;
   late Color tdsColor;
   late Color orpColor;
+  late Color turbidityColor;
 
   @override
   void initState() {
@@ -43,9 +47,11 @@ class _SolutionPageState extends State<SolutionPage> {
     ph = widget.ph!;
     tds = widget.tds!;
     orp = widget.orp!;
+    turbidity = widget.turbidity!;
     phColor = getDangerLevelph(ph);
     tdsColor = getDangerLeveltds(tds);
     orpColor = getDangerLevelorp(orp);
+    turbidityColor = getDangerLevelturbidity(turbidity);
   }
 
   Color getDangerLevelph(double value) {
@@ -69,6 +75,16 @@ class _SolutionPageState extends State<SolutionPage> {
   }
 
   Color getDangerLevelorp(double value) {
+    if (value >= 300 && value <= 400) {
+      return AppColor.kSafeColor;
+    } else if (value >= 401 && value <= 600) {
+      return AppColor.kWarningColor;
+    } else {
+      return AppColor.kDangerColor;
+    }
+  }
+
+  Color getDangerLevelturbidity(double value) {
     if (value >= 300 && value <= 400) {
       return AppColor.kSafeColor;
     } else if (value >= 401 && value <= 600) {
@@ -147,14 +163,21 @@ class _SolutionPageState extends State<SolutionPage> {
                           lineLength: 103,
                         ),
                         SolutionDot(
-                          isActive: false,
+                          isActive: true,
                         ),
                         DottedLine(
                           direction: Axis.vertical,
                           lineLength: 103,
                         ),
                         SolutionDot(
-                          isActive: false,
+                          isActive: true,
+                        ),
+                        DottedLine(
+                          direction: Axis.vertical,
+                          lineLength: 103,
+                        ),
+                        SolutionDot(
+                          isActive: true,
                         ),
                         SizedBox(height: 36),
                       ],
@@ -177,6 +200,7 @@ class _SolutionPageState extends State<SolutionPage> {
                           title: 'Tingkat TDS',
                           pointColor: tdsColor,
                           value: tds,
+                          isActive: true,
                           step: 2,
                         ),
                         SolutionCardDetail(
@@ -184,14 +208,23 @@ class _SolutionPageState extends State<SolutionPage> {
                           title: 'Tingkat ORP',
                           pointColor: orpColor,
                           value: orp,
+                          isActive: true,
                           step: 3,
+                        ),
+                        SolutionCardDetail(
+                          userId: userId,
+                          title: 'Tingkat Kekeruhan',
+                          pointColor: turbidityColor,
+                          value: turbidity,
+                          isActive: true,
+                          step: 4,
                         ),
                       ],
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 172),
+              const SizedBox(height: 88),
               PageButton(
                 text: 'Retest Water!',
                 onTap: () {
@@ -214,6 +247,7 @@ class _SolutionPageState extends State<SolutionPage> {
   }
 }
 
+//SolutionCardDetail
 class SolutionCardDetail extends StatelessWidget {
   const SolutionCardDetail({
     super.key,
@@ -241,7 +275,9 @@ class SolutionCardDetail extends StatelessWidget {
       //if title is Nitrate Levels or Chlorine Levels the string will be "${value} pmm" else it will be "${value
       value: title == 'Tingkat TDS'
           ? '${value} PPM'
-          : (title == 'Tingkat ORP' ? '$value mv' : value.toString()),
+          : (title == 'Tingkat ORP'
+              ? '$value mv'
+              : (title == 'Tingkat Kekeruhan' ? '$value %' : value.toString())),
       onTap: () {
         Navigator.push(
           context,
@@ -261,6 +297,7 @@ class SolutionCardDetail extends StatelessWidget {
   }
 }
 
+//SolutionDot
 class SolutionDot extends StatefulWidget {
   const SolutionDot({
     super.key,

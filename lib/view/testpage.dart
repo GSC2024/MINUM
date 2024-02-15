@@ -156,17 +156,22 @@ class _TestPageState extends State<TestPage> {
               const SizedBox(height: 8),
               TestDetail(
                 detailTitle: 'Tingkat pH',
-                pointColor: Color(0xFFA1F99F),
+                pointColor: AppColor.kBackgroundColor,
                 detailValue: userData?.ph.toString() ?? 'N/A',
               ),
               TestDetail(
                 detailTitle: 'Tingkat TDS',
-                pointColor: Color(0xFFF9D59F),
+                pointColor: AppColor.kBackgroundColor,
                 detailValue: userData?.tds.toString() ?? 'N/A',
               ),
               TestDetail(
                 detailTitle: 'Tingkat ORP',
-                pointColor: Color(0xFFF99F9F),
+                pointColor: AppColor.kBackgroundColor,
+                detailValue: userData?.temperature.toString() ?? 'N/A',
+              ),
+              TestDetail(
+                detailTitle: 'Tingkat Kekeruhan',
+                pointColor: AppColor.kBackgroundColor,
                 detailValue: userData?.temperature.toString() ?? 'N/A',
               ),
               SizedBox(height: 100),
@@ -182,6 +187,7 @@ class _TestPageState extends State<TestPage> {
                         ph: userData?.ph?.toDouble() ?? 0,
                         tds: userData?.tds?.toDouble() ?? 0,
                         orp: userData?.temperature?.toDouble() ?? 0,
+                        turbidity: userData?.temperature?.toDouble() ?? 0,
                       ),
                     ),
                   );
