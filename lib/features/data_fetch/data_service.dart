@@ -1,9 +1,7 @@
 import 'package:firebase_database/firebase_database.dart';
 import '../user_data.dart';
-import '../data_save/sensor_data_service.dart';
 
 class DataService {
-  final SensorDataService _sensorDataService = SensorDataService();
 
   Future<UserData?> fetchData(String userId) async {
   final ref = FirebaseDatabase.instance.ref();
@@ -37,7 +35,4 @@ class DataService {
   }
 }
 
-  Future<void> saveSensorData(String userId, UserData userData) async {
-    await _sensorDataService.saveSensorData(userId, userData);
-  }
 }

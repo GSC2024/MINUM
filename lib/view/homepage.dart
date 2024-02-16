@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gsc2024/features/data_update/update_data.dart';
 import 'package:gsc2024/model/constants.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gsc2024/view/components/homecard.dart';
@@ -121,12 +122,15 @@ class _HomePageState extends State<HomePage> {
               // isConnected == true
               //     ?
               AfterConnectPage(
-                onTap: () => Navigator.push(
+                onTap: () {
+                  updateField(userId, true);
+                  Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => TestPage(userId: userId),
                   ),
-                ),
+                );
+              } 
               )
               // : HomeCard(
               //     cardText: 'Sambungi \nAlat Sekarang!',

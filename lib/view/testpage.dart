@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gsc2024/features/data_update/update_data.dart';
 import 'package:gsc2024/model/constants.dart';
 import 'package:gsc2024/view/components/pagebutton.dart';
 import 'package:gsc2024/view/components/testdetail.dart';
@@ -6,7 +7,9 @@ import 'package:gsc2024/view/components/watercup.dart';
 import 'package:gsc2024/view/homepage.dart';
 import 'package:gsc2024/view/solutionpage.dart';
 import '../features/data_fetch/data_service.dart';
+import '../features/data_save/sensor_data_service.dart';
 import '../features/user_data.dart';
+import 'dart:async';
 
 class TestPage extends StatefulWidget {
   final String userId;
@@ -20,15 +23,30 @@ class _TestPageState extends State<TestPage> {
   late String userId;
   final DataService _dataService = DataService();
   UserData? userData;
+  late Timer _timer;
 
   @override
   void initState() {
     super.initState();
     userId = widget.userId;
     _fetchData(userId);
+    _timer = Timer.periodic(Duration(seconds: 1), (Timer timer) {
+      if (timer.tick >= 10) {
+        timer.cancel();
+        updateField(userId, false);
+      } else {
+        _fetchData(userId);
+      }
+    });
   }
 
-  Future<void> _fetchData(userId) async {
+  @override
+  void dispose() {
+    _timer.cancel(); // Cancel the timer when the widget is disposed
+    super.dispose();
+  }
+
+  Future<void> _fetchData(String userId) async {
     try {
       if (userId != null) {
         UserData? fetchedUserData = await _dataService.fetchData(userId);
@@ -189,21 +207,26 @@ class _TestPageState extends State<TestPage> {
                         userData?.temperature == 0)
                     ? () {}
                     : () {
-                        Navigator.push(
-                          context,
-                          PageRouteBuilder(
-                            pageBuilder:
-                                (context, animation, secondaryAnimation) =>
-                                    SolutionPage(
-                              userId: userId,
-                              ph: userData?.ph?.toDouble() ?? 0,
-                              tds: userData?.tds?.toDouble() ?? 0,
-                              orp: userData?.temperature?.toDouble() ?? 0,
-                              turbidity: userData?.temperature?.toDouble() ?? 0,
-                            ),
-                          ),
-                        );
-                      },
+                        if (userData != null) {
+                            saveSensorData(userId, userData!);
+                              Navigator.push(
+                                context,
+                                  PageRouteBuilder(
+                                        pageBuilder:
+                                        (context, animation, secondaryAnimation) =>
+                                            SolutionPage(
+                                      userId: userId,
+                                      ph: userData?.ph?.toDouble() ?? 0,
+                                      tds: userData?.tds?.toDouble() ?? 0,
+                                      orp: userData?.temperature?.toDouble() ?? 0,
+                                      turbidity: userData?.temperature?.toDouble() ?? 0,
+                                    ),
+                                  ),
+                                );
+                    } else {
+                        print('UserData is null. Cannot save sensor data.');
+                    }
+                  },   
               )
             ],
           ),

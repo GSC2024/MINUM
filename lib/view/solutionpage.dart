@@ -1,6 +1,7 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:gsc2024/features/data_reset/reset_data.dart';
 import 'package:gsc2024/model/constants.dart';
 import 'package:gsc2024/view/components/pagebutton.dart';
 import 'package:gsc2024/view/components/solutioncard.dart';
@@ -228,6 +229,10 @@ class _SolutionPageState extends State<SolutionPage> {
               PageButton(
                 text: 'Retest Water!',
                 onTap: () {
+                  resetField(userId, "PH", 0);
+                  resetField(userId, "EC", 0);
+                  resetField(userId, "TDS", 0);
+                  resetField(userId, "Temperature", 0);
                   Navigator.push(
                     context,
                     PageRouteBuilder(
