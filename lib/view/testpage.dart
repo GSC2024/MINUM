@@ -129,7 +129,7 @@ class _TestPageState extends State<TestPage> {
                     children: [
                       CustomPaint(
                         painter: GlassPainter(
-                            0.8), // 80% filled //TODO: Make this the dynamic value
+                            0.5), // 80% filled //TODO: Make this the dynamic value
                         size: Size(150, 200), // size of the cup
                       ),
                       Text(

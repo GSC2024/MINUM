@@ -93,7 +93,9 @@ class SolutionDetail extends StatelessWidget {
                           ? '$value PPM'
                           : (title == 'Tingkat ORP'
                               ? '$value mv'
-                              : value.toString()),
+                              : (title == 'Tingkat Kekeruhan'
+                                  ? '$value %'
+                                  : value.toString())),
                       style: TextStyle(
                         color: AppColor.kTextColor,
                         fontSize: 16,
@@ -119,16 +121,7 @@ class SolutionDetail extends StatelessWidget {
             PageButton(
               text: 'Next Step!',
               onTap: () {
-                Navigator.push(
-                  context,
-                  PageRouteBuilder(
-                    pageBuilder: (context, animation, secondaryAnimation) =>
-                        SolutionPage(
-                      userId: userId,
-                      ph: ph,
-                    ),
-                  ),
-                );
+                Navigator.pop(context);
               },
             ),
           ],
