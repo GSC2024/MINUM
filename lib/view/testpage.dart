@@ -129,7 +129,7 @@ class _TestPageState extends State<TestPage> {
                     children: [
                       CustomPaint(
                         painter: GlassPainter(
-                            0.5), // 80% filled //TODO: Make this the dynamic value
+                            0.7), // 80% filled //TODO: Make this the dynamic value
                         size: Size(150, 200), // size of the cup
                       ),
                       Text(
@@ -177,21 +177,33 @@ class _TestPageState extends State<TestPage> {
               SizedBox(height: 100),
               PageButton(
                 text: 'Tangani Sekarang!',
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    PageRouteBuilder(
-                      pageBuilder: (context, animation, secondaryAnimation) =>
-                          SolutionPage(
-                        userId: userId,
-                        ph: userData?.ph?.toDouble() ?? 0,
-                        tds: userData?.tds?.toDouble() ?? 0,
-                        orp: userData?.temperature?.toDouble() ?? 0,
-                        turbidity: userData?.temperature?.toDouble() ?? 0,
-                      ),
-                    ),
-                  );
-                },
+                buttonColor: (userData?.ph == 0 ||
+                        userData?.tds == 0 ||
+                        userData?.temperature == 0 ||
+                        userData?.temperature == 0)
+                    ? Color(0xFF9E9E9E)
+                    : AppColor.kButtonColor,
+                onTap: (userData?.ph == 0 ||
+                        userData?.tds == 0 ||
+                        userData?.temperature == 0 ||
+                        userData?.temperature == 0)
+                    ? () {}
+                    : () {
+                        Navigator.push(
+                          context,
+                          PageRouteBuilder(
+                            pageBuilder:
+                                (context, animation, secondaryAnimation) =>
+                                    SolutionPage(
+                              userId: userId,
+                              ph: userData?.ph?.toDouble() ?? 0,
+                              tds: userData?.tds?.toDouble() ?? 0,
+                              orp: userData?.temperature?.toDouble() ?? 0,
+                              turbidity: userData?.temperature?.toDouble() ?? 0,
+                            ),
+                          ),
+                        );
+                      },
               )
             ],
           ),
