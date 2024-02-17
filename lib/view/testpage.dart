@@ -24,6 +24,7 @@ class _TestPageState extends State<TestPage> {
   final DataService _dataService = DataService();
   UserData? userData;
   late Timer _timer;
+  late bool butt = false;
 
   @override
   void initState() {
@@ -34,6 +35,7 @@ class _TestPageState extends State<TestPage> {
       if (timer.tick >= 10) {
         timer.cancel();
         updateField(userId, false);
+        butt = true;
       } else {
         _fetchData(userId);
       }
@@ -199,14 +201,14 @@ class _TestPageState extends State<TestPage> {
                         userData?.tds == 0 ||
                         userData?.temperature == 0 ||
                         userData?.temperature == 0)
-                    ? Color(0xFF9E9E9E)
+                    ? Color(0xFF9E9E9E) : (butt == false) ? Color(0xFF9E9E9E)
                     : AppColor.kButtonColor,
                 onTap: (userData?.ph == 0 ||
                         userData?.tds == 0 ||
                         userData?.temperature == 0 ||
                         userData?.temperature == 0)
                     ? () {}
-                    : () {
+                    : (butt == false) ? () {} : () {
                         if (userData != null) {
                             saveSensorData(userId, userData!);
                               Navigator.push(
