@@ -8,11 +8,13 @@ class HistoryCard extends StatefulWidget {
     required this.mainPercentage,
     required this.date,
     required this.diffPercentage,
+    this.lastCard,
   });
 
   final int mainPercentage;
   final DateTime date;
   final String diffPercentage;
+  final bool? lastCard;
 
   @override
   State<HistoryCard> createState() => _HistoryCardState();
@@ -22,10 +24,10 @@ class _HistoryCardState extends State<HistoryCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 12),
+      margin: EdgeInsets.only(right: widget.lastCard == true ? 0 : 16),
       padding: EdgeInsets.all(8),
       height: 76,
-      width: 160,
+      width: 170,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(4),
         color: AppColor.kButtonColor,
