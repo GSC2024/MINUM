@@ -22,8 +22,8 @@ class _HistoryCardState extends State<HistoryCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(right: 11),
-      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      margin: EdgeInsets.symmetric(horizontal: 12),
+      padding: EdgeInsets.all(8),
       height: 76,
       width: 160,
       decoration: BoxDecoration(

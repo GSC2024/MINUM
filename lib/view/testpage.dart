@@ -201,34 +201,40 @@ class _TestPageState extends State<TestPage> {
                         userData?.tds == 0 ||
                         userData?.temperature == 0 ||
                         userData?.temperature == 0)
-                    ? Color(0xFF9E9E9E) : (butt == false) ? Color(0xFF9E9E9E)
-                    : AppColor.kButtonColor,
+                    ? Color(0xFF9E9E9E)
+                    : (butt == true)
+                        ? Color(0xFF9E9E9E)
+                        : AppColor.kButtonColor,
                 onTap: (userData?.ph == 0 ||
                         userData?.tds == 0 ||
                         userData?.temperature == 0 ||
                         userData?.temperature == 0)
                     ? () {}
-                    : (butt == false) ? () {} : () {
-                        if (userData != null) {
-                            saveSensorData(userId, userData!);
+                    : (butt == true)
+                        ? () {}
+                        : () {
+                            if (userData != null) {
+                              saveSensorData(userId, userData!);
                               Navigator.push(
                                 context,
-                                  PageRouteBuilder(
-                                        pageBuilder:
-                                        (context, animation, secondaryAnimation) =>
-                                            SolutionPage(
-                                      userId: userId,
-                                      ph: userData?.ph?.toDouble() ?? 0,
-                                      tds: userData?.tds?.toDouble() ?? 0,
-                                      orp: userData?.temperature?.toDouble() ?? 0,
-                                      turbidity: userData?.temperature?.toDouble() ?? 0,
-                                    ),
+                                PageRouteBuilder(
+                                  pageBuilder: (context, animation,
+                                          secondaryAnimation) =>
+                                      SolutionPage(
+                                    userId: userId,
+                                    ph: userData?.ph?.toDouble() ?? 0,
+                                    tds: userData?.tds?.toDouble() ?? 0,
+                                    orp: userData?.temperature?.toDouble() ?? 0,
+                                    turbidity:
+                                        userData?.temperature?.toDouble() ?? 0,
                                   ),
-                                );
-                    } else {
-                        print('UserData is null. Cannot save sensor data.');
-                    }
-                  },   
+                                ),
+                              );
+                            } else {
+                              print(
+                                  'UserData is null. Cannot save sensor data.');
+                            }
+                          },
               )
             ],
           ),

@@ -86,9 +86,9 @@ class _SolutionPageState extends State<SolutionPage> {
   }
 
   Color getDangerLevelturbidity(double value) {
-    if (value >= 81 && value <= 100) {
+    if (value <= 20) {
       return AppColor.kSafeColor;
-    } else if (value >= 40 && value <= 80) {
+    } else if (value <= 40) {
       return AppColor.kWarningColor;
     } else {
       return AppColor.kDangerColor;
@@ -148,7 +148,26 @@ class _SolutionPageState extends State<SolutionPage> {
                   ),
                 ],
               ),
-              const SizedBox(height: 94), //58
+              const SizedBox(height: 58), //58 //94
+              Text(
+                'Solusi',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: AppColor.kTextColor,
+                  fontSize: 28,
+                  fontFamily: 'Poppins',
+                ),
+              ),
+              Text(
+                'Penanganan Air',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: AppColor.kTextColor,
+                  fontSize: 28,
+                  fontFamily: 'Poppins',
+                ),
+              ),
+              SizedBox(height: 20), //40 //60
               Row(
                 children: [
                   Expanded(
@@ -225,7 +244,7 @@ class _SolutionPageState extends State<SolutionPage> {
                   ),
                 ],
               ),
-              const SizedBox(height: 88),
+              const SizedBox(height: 80),
               PageButton(
                 text: 'Retest Water!',
                 onTap: () {
