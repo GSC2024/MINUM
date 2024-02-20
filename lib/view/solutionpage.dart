@@ -85,9 +85,9 @@ class _SolutionPageState extends State<SolutionPage> {
   }
 
   Color getDangerLevelturbidity(double value) {
-    if (value >= 300 && value <= 400) {
+    if (value <= 20) {
       return AppColor.kSafeColor;
-    } else if (value >= 401 && value <= 600) {
+    } else if (value <= 40) {
       return AppColor.kWarningColor;
     } else {
       return AppColor.kDangerColor;
@@ -189,9 +189,9 @@ class _SolutionPageState extends State<SolutionPage> {
                       children: [
                         SolutionCardDetail(
                           userId: userId,
-                          title: 'Tingkat pH',
-                          pointColor: phColor,
-                          value: ph,
+                          title: 'Tingkat Kekeruhan',
+                          pointColor: turbidityColor,
+                          value: turbidity,
                           isActive: true,
                           step: 1,
                         ),
@@ -213,9 +213,9 @@ class _SolutionPageState extends State<SolutionPage> {
                         ),
                         SolutionCardDetail(
                           userId: userId,
-                          title: 'Tingkat Kekeruhan',
-                          pointColor: turbidityColor,
-                          value: turbidity,
+                          title: 'Tingkat pH',
+                          pointColor: phColor,
+                          value: ph,
                           isActive: true,
                           step: 4,
                         ),

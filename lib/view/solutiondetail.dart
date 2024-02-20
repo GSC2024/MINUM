@@ -32,15 +32,57 @@ class SolutionDetail extends StatelessWidget {
       }
     } else if (title == 'Tingkat TDS') {
       if (value >= 50 && value <= 150) {
-        return 'Air Bagus';
+        return 'Air kamu layak diminum!';
       } else if (value >= 151 && value <= 250) {
+        return '''
+            
+              Bio-sand Filter
+
+              Materials:
+              Bottle or container
+              layers of fine cloth, sized to cover the container surface
+              Sand
+              Gravel
+
+              Steps:
+              Create an exit point at the bottom or connect it to a tap (optional).
+              Place the first layer of cloth at the bottom of the container, ensuring it covers the water exit point.
+              Add a layer of gravel, ensuring it covers the entire surface of the container.
+              Add a thick layer of sand, covering the gravel layer completely.
+              Once all layers are added, cover the top with another fine cloth.
+              Ensure all layers are tightly packed, and flush water through the filter until it runs clear.
+              ''';
+      } else {
+        return '''
+            
+  Bio-sand Filter
+
+  Materials:
+  Bottle or container
+  layers of fine cloth, sized to cover the container surface
+  Sand
+  Gravel
+
+  Steps:
+  Create an exit point at the bottom or connect it to a tap (optional).
+  Place the first layer of cloth at the bottom of the container, ensuring it covers the water exit point.
+  Add a layer of gravel, ensuring it covers the entire surface of the container.
+  Add a thick layer of sand, covering the gravel layer completely.
+  Once all layers are added, cover the top with another fine cloth.
+  Ensure all layers are tightly packed, and flush water through the filter until it runs clear.
+              ''';
+      }
+    } else if (title == 'Tingkat Kekeruhan') {
+      if (value <= 20) {
+        return 'Air kamu layak diminum!';
+      } else if (value <= 40) {
         return 'Air B aja';
       } else {
         return 'Air jelek ';
       }
     } else {
       if (value >= 300 && value <= 400) {
-        return 'Air Bagus';
+        return 'Air kamu layak diminum!';
       } else if (value >= 401 && value <= 600) {
         return 'Air B aja';
       } else {
@@ -107,13 +149,11 @@ class SolutionDetail extends StatelessWidget {
                 SizedBox(height: 40),
                 Text(
                   getMessage(title, value),
-                  //'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. \n\nDuis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 12,
                     fontFamily: 'Poppins',
                     fontWeight: FontWeight.w400,
-                    height: 0,
                   ),
                 ),
               ],
