@@ -16,7 +16,7 @@ class DataService {
     // Accessing nested sensor data with null checks
     int? tds = snapshot.child('sensor/TDS').value as int?;
     int? temperature = snapshot.child('sensor/Temperature').value as int?;
-    int? ph = snapshot.child('sensor/PH').value as int?;
+    double? ph = snapshot.child('sensor/PH').value as double?;
     int? ec = snapshot.child('sensor/EC').value as int?;
 
     // Create and return UserData object
