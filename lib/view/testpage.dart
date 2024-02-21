@@ -52,28 +52,29 @@ class _TestPageState extends State<TestPage> {
   }
 
   Future<void> _fetchData(String userId) async {
-  try {
-    if (userId != null) {
-      UserData? fetchedUserData = await _dataService.fetchData(userId);
-      double overallFormulaResult = calculateOverallFormula(
-        fetchedUserData?.ph ?? 0, // Assuming ph is a property of UserData
-        fetchedUserData?.tds ?? 0, // Assuming tds is a property of UserData
-        fetchedUserData?.turbidity ?? 0, // Assuming turbidity is a property of UserData
-      );
+    try {
+      if (userId != null) {
+        UserData? fetchedUserData = await _dataService.fetchData(userId);
+        double overallFormulaResult = calculateOverallFormula(
+          fetchedUserData?.ph ?? 0, // Assuming ph is a property of UserData
+          fetchedUserData?.tds ?? 0, // Assuming tds is a property of UserData
+          fetchedUserData?.turbidity ??
+              0, // Assuming turbidity is a property of UserData
+        );
 
-      setState(() {
-        userData = fetchedUserData;
-        formulaResult = overallFormulaResult;
-      });
+        setState(() {
+          userData = fetchedUserData;
+          formulaResult = overallFormulaResult;
+        });
 
-      print('User Data: $userData');
-    } else {
-      print('User is not signed in or userId is null.');
+        print('User Data: $userData');
+      } else {
+        print('User is not signed in or userId is null.');
+      }
+    } catch (error) {
+      print('Error fetching data: $error');
     }
-  } catch (error) {
-    print('Error fetching data: $error');
   }
-}
 
   @override
   Widget build(BuildContext context) {
@@ -199,43 +200,38 @@ class _TestPageState extends State<TestPage> {
                 pointColor: AppColor.kBackgroundColor,
                 detailValue: userData?.turbidity.toString() ?? 'N/A',
               ),
-              SizedBox(height: 100),
+              SizedBox(height: 120),
               PageButton(
                 text: 'Tangani Sekarang!',
                 buttonColor: (userData?.ph == 0 ||
                         userData?.tds == 0 ||
                         userData?.turbidity == 0)
                     ? Color(0xFF9E9E9E)
-                    : (butt == true)
-                        ? Color(0xFF9E9E9E)
-                        : AppColor.kButtonColor,
+                    : AppColor.kButtonColor,
                 onTap: (userData?.ph == 0 ||
                         userData?.tds == 0 ||
                         userData?.turbidity == 0)
                     ? () {}
-                    : (butt == true)
-                        ? () {}
-                        : () {
-                            if (userData != null) {
-                              saveSensorData(userId, userData!);
-                              Navigator.push(
-                                context,
-                                PageRouteBuilder(
-                                  pageBuilder: (context, animation,
-                                          secondaryAnimation) =>
+                    : () {
+                        if (userData != null) {
+                          saveSensorData(userId, userData!);
+                          Navigator.push(
+                            context,
+                            PageRouteBuilder(
+                              pageBuilder:
+                                  (context, animation, secondaryAnimation) =>
                                       SolutionPage(
-                                    userId: userId,
-                                    ph: userData?.ph?.toDouble() ?? 0,
-                                    tds: userData?.tds?.toDouble() ?? 0,
-                                    turbidity: userData?.turbidity?.toDouble() ?? 0,
-                                  ),
-                                ),
-                              );
-                            } else {
-                              print(
-                                  'UserData is null. Cannot save sensor data.');
-                            }
-                          },
+                                userId: userId,
+                                ph: userData?.ph?.toDouble() ?? 0,
+                                tds: userData?.tds?.toDouble() ?? 0,
+                                turbidity: userData?.turbidity?.toDouble() ?? 0,
+                              ),
+                            ),
+                          );
+                        } else {
+                          print('UserData is null. Cannot save sensor data.');
+                        }
+                      },
               )
             ],
           ),
