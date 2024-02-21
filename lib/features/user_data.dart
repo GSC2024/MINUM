@@ -4,7 +4,7 @@ class UserData {
   final String? email;
   final int? tds;
   final int? temperature;
-  final int? ph;
+  final double? ph;
   final int? ec;
 
   UserData({this.firstName, this.lastName, this.email, this.tds, this.temperature, this.ph, this.ec});

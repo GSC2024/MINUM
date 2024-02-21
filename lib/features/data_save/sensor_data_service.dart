@@ -1,22 +1,13 @@
 import 'package:firebase_database/firebase_database.dart';
-import '../user_data.dart'; // Import the UserData class
+import '../user_data.dart';
 
-class SensorDataService {
   Future<void> saveSensorData(String userId, UserData userData) async {
     try {
-      // Get the current date
       DateTime currentDate = DateTime.now();
-
-      // Format the date to YYYY-MM-DD
       String formattedDate = "${currentDate.year}-${currentDate.month}-${currentDate.day}";
-
-      // Path to store sensor data
-      String sensorDataPath = 'sensor_data/$userId/$formattedDate';
-
-      // Reference to the sensor data path
-      DatabaseReference sensorDataRef = FirebaseDatabase.instance.reference().child(sensorDataPath);
-
-      // Save sensor data
+      String sensorDataPath = 'users/$userId/saveData/$formattedDate';
+      DatabaseReference sensorDataRef = FirebaseDatabase.instance.ref().child(sensorDataPath);
+            
       await sensorDataRef.set({
         'EC': userData.ec,
         'PH': userData.ph,
@@ -30,4 +21,4 @@ class SensorDataService {
       throw error;
     }
   }
-}
+

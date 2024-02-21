@@ -1,15 +1,30 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
+import 'package:gsc2024/features/data_reset/reset_data.dart';
 import 'package:gsc2024/model/constants.dart';
 import 'package:gsc2024/view/components/pagebutton.dart';
 import 'package:gsc2024/view/components/solutioncard.dart';
 import 'package:gsc2024/view/components/solutionstep.dart';
 import 'package:gsc2024/view/homepage.dart';
+import 'package:gsc2024/view/solutiondetail.dart';
 import 'package:gsc2024/view/testpage.dart';
 import 'package:dotted_line/dotted_line.dart';
 
 class SolutionPage extends StatefulWidget {
   final String userId;
-  const SolutionPage({Key? key, required this.userId}) : super(key: key);
+  final double? ph;
+  final double? tds;
+  final double? orp;
+  final double? turbidity;
+  const SolutionPage({
+    Key? key,
+    required this.userId,
+    this.ph,
+    this.tds,
+    this.orp,
+    this.turbidity,
+  }) : super(key: key);
 
   @override
   State<SolutionPage> createState() => _SolutionPageState();
@@ -17,10 +32,67 @@ class SolutionPage extends StatefulWidget {
 
 class _SolutionPageState extends State<SolutionPage> {
   late String userId;
+  late double ph;
+  late double tds;
+  late double orp;
+  late double turbidity;
+  late Color phColor;
+  late Color tdsColor;
+  late Color orpColor;
+  late Color turbidityColor;
+
   @override
   void initState() {
     super.initState();
     userId = widget.userId;
+    ph = widget.ph!;
+    tds = widget.tds!;
+    orp = widget.orp!;
+    turbidity = widget.turbidity!;
+    phColor = getDangerLevelph(ph);
+    tdsColor = getDangerLeveltds(tds);
+    orpColor = getDangerLevelorp(orp);
+    turbidityColor = getDangerLevelturbidity(turbidity);
+  }
+
+  Color getDangerLevelph(double value) {
+    if (value >= 6.5 && value <= 8.5) {
+      return AppColor.kSafeColor;
+    } else if (value >= 6 && value <= 9) {
+      return AppColor.kWarningColor;
+    } else {
+      return AppColor.kDangerColor;
+    }
+  }
+
+  Color getDangerLeveltds(double value) {
+    if (value >= 50 && value <= 150) {
+      return AppColor.kSafeColor;
+    } else if (value >= 151 && value <= 250) {
+      return AppColor.kWarningColor;
+    } else {
+      return AppColor.kDangerColor;
+    }
+  }
+
+  Color getDangerLevelorp(double value) {
+    if (value >= 300 && value <= 400) {
+      return AppColor.kSafeColor;
+    } else if (value >= 401 && value <= 600) {
+      return AppColor.kWarningColor;
+    } else {
+      return AppColor.kDangerColor;
+    }
+  }
+
+  Color getDangerLevelturbidity(double value) {
+    if (value <= 20) {
+      return AppColor.kSafeColor;
+    } else if (value <= 40) {
+      return AppColor.kWarningColor;
+    } else {
+      return AppColor.kDangerColor;
+    }
   }
 
   @override
@@ -39,7 +111,16 @@ class _SolutionPageState extends State<SolutionPage> {
                     flex: 1,
                     child: InkWell(
                       onTap: () {
-                        Navigator.pop(context);
+                        Navigator.push(
+                          context,
+                          PageRouteBuilder(
+                            pageBuilder:
+                                (context, animation, secondaryAnimation) =>
+                                    TestPage(
+                              userId: userId,
+                            ),
+                          ),
+                        );
                       },
                       child: Icon(
                         Icons.arrow_back,
@@ -67,29 +148,26 @@ class _SolutionPageState extends State<SolutionPage> {
                   ),
                 ],
               ),
-              const SizedBox(height: 36),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  SolutionStep(
-                    text: 'Step 1',
-                    isActive: true,
-                  ),
-                  SolutionStep(
-                    text: 'Step 2',
-                    isActive: false,
-                  ),
-                  SolutionStep(
-                    text: 'Step 3',
-                    isActive: false,
-                  ),
-                  SolutionStep(
-                    text: 'Step 4',
-                    isActive: false,
-                  ),
-                ],
+              const SizedBox(height: 58), //58 //94
+              Text(
+                'Solusi',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: AppColor.kTextColor,
+                  fontSize: 28,
+                  fontFamily: 'Poppins',
+                ),
               ),
-              const SizedBox(height: 58),
+              Text(
+                'Penanganan Air',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: AppColor.kTextColor,
+                  fontSize: 28,
+                  fontFamily: 'Poppins',
+                ),
+              ),
+              SizedBox(height: 20), //40 //60
               Row(
                 children: [
                   Expanded(
@@ -105,21 +183,21 @@ class _SolutionPageState extends State<SolutionPage> {
                           lineLength: 103,
                         ),
                         SolutionDot(
-                          isActive: false,
+                          isActive: true,
                         ),
                         DottedLine(
                           direction: Axis.vertical,
                           lineLength: 103,
                         ),
                         SolutionDot(
-                          isActive: false,
+                          isActive: true,
                         ),
                         DottedLine(
                           direction: Axis.vertical,
                           lineLength: 103,
                         ),
                         SolutionDot(
-                          isActive: false,
+                          isActive: true,
                         ),
                         SizedBox(height: 36),
                       ],
@@ -129,40 +207,62 @@ class _SolutionPageState extends State<SolutionPage> {
                     flex: 3,
                     child: Column(
                       children: [
-                        SolutionCard(
-                          text: 'Nitrate Levels',
+                        SolutionCardDetail(
+                          userId: userId,
+                          title: 'Tingkat Kekeruhan',
+                          pointColor: turbidityColor,
+                          value: turbidity,
                           isActive: true,
+                          step: 1,
                         ),
-                        SolutionCard(
-                          text: 'Chlorine Levels',
-                          isActive: false,
+                        SolutionCardDetail(
+                          userId: userId,
+                          title: 'Tingkat TDS',
+                          pointColor: tdsColor,
+                          value: tds,
+                          isActive: true,
+                          step: 2,
                         ),
-                        SolutionCard(
-                          text: 'TDS Levels',
-                          isActive: false,
+                        SolutionCardDetail(
+                          userId: userId,
+                          title: 'Tingkat ORP',
+                          pointColor: orpColor,
+                          value: orp,
+                          isActive: true,
+                          step: 3,
                         ),
-                        SolutionCard(
-                          text: 'pH',
-                          isActive: false,
+                        SolutionCardDetail(
+                          userId: userId,
+                          title: 'Tingkat pH',
+                          pointColor: phColor,
+                          value: ph,
+                          isActive: true,
+                          step: 4,
                         ),
                       ],
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 80),
               PageButton(
                 text: 'Retest Water!',
                 onTap: () {
+                  resetField(userId, "PH", 0);
+                  resetField(userId, "EC", 0);
+                  resetField(userId, "TDS", 0);
+                  resetField(userId, "Temperature", 0);
                   Navigator.push(
                     context,
                     PageRouteBuilder(
                       pageBuilder: (context, animation, secondaryAnimation) =>
-                          HomePage(userId: userId,),
+                          HomePage(
+                        userId: userId,
+                      ),
                     ),
                   );
                 },
-              )
+              ),
             ],
           ),
         ),
@@ -171,6 +271,57 @@ class _SolutionPageState extends State<SolutionPage> {
   }
 }
 
+//SolutionCardDetail
+class SolutionCardDetail extends StatelessWidget {
+  const SolutionCardDetail({
+    super.key,
+    required this.userId,
+    required this.title,
+    required this.pointColor,
+    required this.value,
+    this.isActive,
+    required this.step,
+  });
+
+  final String userId;
+  final String title;
+  final Color pointColor;
+  final double value;
+  final bool? isActive;
+  final int step;
+
+  @override
+  Widget build(BuildContext context) {
+    return SolutionCard(
+      text: title,
+      isActive: isActive ?? false,
+      pointColor: pointColor,
+      //if title is Nitrate Levels or Chlorine Levels the string will be "${value} pmm" else it will be "${value
+      value: title == 'Tingkat TDS'
+          ? '${value} PPM'
+          : (title == 'Tingkat ORP'
+              ? '$value mv'
+              : (title == 'Tingkat Kekeruhan' ? '$value %' : value.toString())),
+      onTap: () {
+        Navigator.push(
+          context,
+          PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                SolutionDetail(
+              title: title,
+              value: value,
+              pointColor: pointColor,
+              userId: userId,
+              step: step,
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+//SolutionDot
 class SolutionDot extends StatefulWidget {
   const SolutionDot({
     super.key,

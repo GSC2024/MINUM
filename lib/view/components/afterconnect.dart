@@ -96,6 +96,7 @@ class AfterConnectPage extends StatelessWidget {
                   mainPercentage: 27,
                   diffPercentage: '+ 27.0%',
                   date: DateTime.now(),
+                  lastCard: true,
                 ),
               ],
             ),

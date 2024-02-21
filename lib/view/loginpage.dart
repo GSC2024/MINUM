@@ -63,6 +63,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 SizedBox(height: 20),
                 TextInputField(
+                  obscureText: true,
                   controller: passwordController, //TODO: add controller
                   hintText: 'Kata Sandi',
                 ),
@@ -138,7 +139,8 @@ class _LoginPageState extends State<LoginPage> {
     String email = emailController.text;
     String password = passwordController.text;
 
-    Map<String, dynamic>? user = await _auth.signInWithEmailAndPassword(email, password);
+    Map<String, dynamic>? user =
+        await _auth.signInWithEmailAndPassword(email, password);
 
     if (user != null) {
       String userIds = user['userId'];
@@ -146,7 +148,7 @@ class _LoginPageState extends State<LoginPage> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => HomePage(userId:userIds),
+          builder: (context) => HomePage(userId: userIds),
         ),
       );
     } else {

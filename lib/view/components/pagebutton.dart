@@ -6,10 +6,12 @@ class PageButton extends StatelessWidget {
     super.key,
     required this.onTap,
     required this.text,
+    this.buttonColor,
   });
 
   final String text;
   final VoidCallback onTap;
+  final Color? buttonColor;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class PageButton extends StatelessWidget {
         alignment: Alignment.center,
         width: double.infinity,
         decoration: BoxDecoration(
-          color: AppColor.kButtonColor,
+          color: buttonColor != null ? buttonColor : AppColor.kButtonColor,
           border: Border.all(
             color: AppColor.kTextColor,
           ),
