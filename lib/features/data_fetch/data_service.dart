@@ -14,10 +14,9 @@ class DataService {
     String? email = snapshot.child('email').value as String?;
 
     // Accessing nested sensor data with null checks
-    int? tds = snapshot.child('sensor/TDS').value as int?;
-    int? temperature = snapshot.child('sensor/Temperature').value as int?;
+    double? tds = snapshot.child('sensor/TDS').value as double?;
+    double? turbidity = snapshot.child('sensor/Turbidity').value as double?;
     double? ph = snapshot.child('sensor/PH').value as double?;
-    int? ec = snapshot.child('sensor/EC').value as int?;
 
     // Create and return UserData object
     return UserData(
@@ -25,9 +24,8 @@ class DataService {
       lastName: lastName,
       email: email,
       tds: tds,
-      temperature: temperature,
+      turbidity: turbidity,
       ph: ph,
-      ec: ec,
     );
   } else {
     print('No data available.');
