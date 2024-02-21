@@ -26,9 +26,40 @@ class SolutionDetail extends StatelessWidget {
       if (value >= 6.5 && value <= 8.5) {
         return 'Tingkat pH layak untuk diminum!';
       } else if (value >= 6 && value <= 9) {
-        return 'Air B aja';
+        return '''
+Low pH:
+pH 2 - 4: 
+Add 4ml of lime juice to 100ml of water, and run through the test again
+
+pH 4 - 6.5: 
+Add 2ml of lime juice to 100ml of water, and run through the test again
+
+
+High pH:
+pH 8.5 - 10:
+Add ¼ tsp of baking soda to 100ml of water, and run through the test again
+
+pH >10 - 12: 
+Add ½ tsp of baking soda to 100ml of water, and run through the test again
+
+''';
       } else {
-        return 'Air jelek ';
+        return '''
+Low pH:
+pH 2 - 4: 
+Add 4ml of lime juice to 100ml of water, and run through the test again
+
+pH 4 - 6.5: 
+Add 2ml of lime juice to 100ml of water, and run through the test again
+
+
+High pH:
+pH 8.5 - 10:
+Add ¼ tsp of baking soda to 100ml of water, and run through the test again
+
+pH >10 - 12: 
+Add ½ tsp of baking soda to 100ml of water, and run through the test again
+''';
       }
     } else if (title == 'Tingkat TDS') {
       if (value >= 50 && value <= 150) {
@@ -88,17 +119,37 @@ Steps:
       if (value <= 20) {
         return 'Tingkat Kekeruhan layak untuk diminum!';
       } else if (value <= 40) {
-        return 'Air B aja';
+        return '''
+Boiling
+
+1. Boil water until it reaches 100 deg C or water starts to bubble. 
+
+2. Once the water reaches 100°C and starts to bubble, turn off the heat and allow it to cool slightly.
+
+3. Allow the water to sit undisturbed for some time to allow any remaining particles or sediment to settle at the bottom of the container. 
+
+4. Once the water has cooled, pour it into a clean container, leaving the sediment behind.
+''';
       } else {
-        return 'Air jelek ';
+        return '''
+Boiling
+
+1. Boil water until it reaches 100 deg C or water starts to bubble. 
+
+2. Once the water reaches 100°C and starts to bubble, turn off the heat and allow it to cool slightly.
+
+3. Allow the water to sit undisturbed for some time to allow any remaining particles or sediment to settle at the bottom of the container. 
+
+4. Once the water has cooled, pour it into a clean container, leaving the sediment behind.
+''';
       }
     } else {
       if (value >= 300 && value <= 400) {
         return 'Air kamu layak diminum!';
       } else if (value >= 401 && value <= 600) {
-        return 'Air B aja';
+        return 'Air kamu kurang layak diminum';
       } else {
-        return 'Air jelek ';
+        return 'Air kamu belum layak diminum';
       }
     }
   }
@@ -147,7 +198,7 @@ Steps:
                       title == 'Tingkat TDS'
                           ? '$value PPM'
                           : (title == 'Tingkat Kekeruhan'
-                              ? '$value %'
+                              ? '$value NTU'
                               : value.toString()),
                       style: TextStyle(
                         color: AppColor.kTextColor,

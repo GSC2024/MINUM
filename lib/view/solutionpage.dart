@@ -268,7 +268,7 @@ class SolutionCardDetail extends StatelessWidget {
       //if title is Nitrate Levels or Chlorine Levels the string will be "${value} pmm" else it will be "${value
       value: title == 'Tingkat TDS'
           ? '${value} PPM'
-          : (title == 'Tingkat Kekeruhan' ? '$value %' : value.toString()),
+          : (title == 'Tingkat Kekeruhan' ? '$value NTU' : value.toString()),
       onTap: () {
         Navigator.push(
           context,

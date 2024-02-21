@@ -16,20 +16,22 @@ double calculateTDSPercentage(double tds) {
   } else if (tds >= 201 && tds <= 250) {
     return 0;
   } else {
-    return -1; 
+    return -1;
   }
 }
 
 double calculateTurbidityPercentage(double turbidity) {
-  if (turbidity == 1) {
+  if (turbidity <= 10) {
     return 100;
-  } else if (turbidity >= 2 && turbidity <= 5) {
+  } else if (turbidity <= 30) {
     return 80;
-  } else if (turbidity > 5) {
+  } else if (turbidity > 90) {
+    return 40;
+  } else if (turbidity > 90) {
     return 0;
   } else {
-    return -1; 
-}
+    return -1;
+  }
 }
 
 double calculateOverallFormula(double pH, double tds, double turbidity) {
