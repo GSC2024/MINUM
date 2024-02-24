@@ -104,7 +104,9 @@ class _SignupPageState extends State<SignupPage> {
                       ),
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
                       child: Text(
                         'Login Sekarang!',
                         style: TextStyle(

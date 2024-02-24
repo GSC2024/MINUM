@@ -7,14 +7,17 @@ class TextInputField extends StatelessWidget {
     super.key,
     required this.hintText,
     required this.controller,
+    this.obscureText,
   });
 
   final String hintText;
   final TextEditingController controller;
+  final bool? obscureText;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      obscureText: obscureText ?? false,
       controller: controller,
       decoration: InputDecoration(
         hintText: hintText,

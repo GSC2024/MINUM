@@ -16,7 +16,7 @@ class AfterConnectPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 44),
+      padding: const EdgeInsets.only(top: 84),
       child: Column(
         children: [
           Row(
@@ -47,11 +47,12 @@ class AfterConnectPage extends StatelessWidget {
               ),
             ],
           ),
+          SizedBox(height: 26),
           HomeCard(
             cardText: 'Uji Kelayakan \nAir Sekarang!',
             onTap: onTap, // () {}, //TODO: Add onTap function
           ),
-          SizedBox(height: 56),
+          SizedBox(height: 86),
           Text(
             'Data Kualitas Air',
             style: TextStyle(
@@ -61,15 +62,15 @@ class AfterConnectPage extends StatelessWidget {
               fontWeight: FontWeight.w500,
             ),
           ),
-          Container(
-            height: 170,
-            width: double.infinity,
-            color: Colors.grey,
-            alignment: Alignment.center,
-            child: Text(
-              'Chart',
-            ),
-          ),
+          // Container(
+          //   height: 170,
+          //   width: double.infinity,
+          //   //color: AppColor.kBackgroundColor,
+          //   alignment: Alignment.center,
+          //   // child: Text(
+          //   //   'Chart',
+          //   // ),
+          // ),
           SizedBox(height: 36),
           SizedBox(
             height: 76,
@@ -96,11 +97,12 @@ class AfterConnectPage extends StatelessWidget {
                   mainPercentage: 27,
                   diffPercentage: '+ 27.0%',
                   date: DateTime.now(),
+                  lastCard: true,
                 ),
               ],
             ),
           ),
-          SizedBox(height: 24),
+          SizedBox(height: 124),
           Text(
             'Created with Hope & Love',
             style: TextStyle(

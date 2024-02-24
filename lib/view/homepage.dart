@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gsc2024/features/data_update/update_data.dart';
 import 'package:gsc2024/model/constants.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gsc2024/view/components/homecard.dart';
@@ -12,16 +13,15 @@ class HomePage extends StatefulWidget {
   final String userId; // Add userId as a property
   HomePage({Key? key, required this.userId}) : super(key: key);
 
-
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  late String userId; 
+  late String userId;
   final DataService _dataService = DataService();
   UserData? userData;
-  bool isConnected = false;
+  //bool isConnected = false;
 
   @override
   void initState() {
@@ -31,28 +31,28 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> _fetchData(userId) async {
-  try {
-    if (userId != null) {
-      UserData? fetchedUserData = await _dataService.fetchData(userId);
-      setState(() {
-        userData = fetchedUserData;
-      });
+    try {
+      if (userId != null) {
+        UserData? fetchedUserData = await _dataService.fetchData(userId);
+        setState(() {
+          userData = fetchedUserData;
+        });
 
-      print('User Data: $userData');
-    } else {
-      print('User is not signed in or userId is null.');
+        print('User Data: $userData');
+      } else {
+        print('User is not signed in or userId is null.');
+      }
+    } catch (error) {
+      print('Error fetching data: $error');
     }
-  } catch (error) {
-    print('Error fetching data: $error');
   }
-}
 
-  void pressed() {
-    setState(() {
-      isConnected = !isConnected;
-      print('isConnected = $isConnected');
-    });
-  }
+  // void pressed() {
+  //   setState(() {
+  //     isConnected = !isConnected;
+  //     print('isConnected = $isConnected');
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +80,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       SizedBox(height: 4),
                       Text(
-                        "${userData?.firstName} ${userData?.lastName}" ,
+                        "${userData?.firstName} ${userData?.lastName}",
                         style: TextStyle(
                           color: AppColor.kTextColor,
                           fontWeight: FontWeight.w500,
@@ -90,47 +90,52 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ],
                   ),
-                  isConnected == true
-                      ? InkWell(
-                          onTap: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ProfilePage(),
-                            ),
-                          ),
-                          child: Container(
-                            width: 56,
-                            height: 56,
-                            decoration: ShapeDecoration(
-                              color: Colors.grey,
-                              shape: OvalBorder(side: BorderSide(width: 1.60)),
-                            ),
-                          ),
-                        )
-                      : Container(
-                          width: 56,
-                          height: 56,
-                          decoration: ShapeDecoration(
-                            color: Colors.grey,
-                            shape: OvalBorder(side: BorderSide(width: 1.60)),
-                          ),
-                        ),
-
-                ],
-              ),
-              isConnected == true
-                  ? AfterConnectPage(
-                      onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => TestPage(userId: userId),
+                  //isConnected == true ?
+                  InkWell(
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ProfilePage(
+                          userId: userId,
                         ),
                       ),
-                    )
-                  : HomeCard(
-                      cardText: 'Sambungi \nAlat Sekarang!',
-                      onTap: pressed, //TODO: Add onTap function
                     ),
+                    child: Container(
+                      width: 56,
+                      height: 56,
+                      decoration: ShapeDecoration(
+                        color: Colors.grey,
+                        shape: OvalBorder(side: BorderSide(width: 1.60)),
+                      ),
+                    ),
+                  )
+                  // : Container(
+                  //     width: 56,
+                  //     height: 56,
+                  //     decoration: ShapeDecoration(
+                  //       color: Colors.grey,
+                  //       shape: OvalBorder(side: BorderSide(width: 1.60)),
+                  //     ),
+                  //   ),
+                ],
+              ),
+              // isConnected == true
+              //     ?
+              AfterConnectPage(
+                onTap: () {
+                  updateField(userId, true);
+                  Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => TestPage(userId: userId),
+                  ),
+                );
+              } 
+              )
+              // : HomeCard(
+              //     cardText: 'Sambungi \nAlat Sekarang!',
+              //     onTap: pressed, //TODO: Add onTap function
+              //   ),
             ],
           ),
         ),
