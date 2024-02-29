@@ -15,14 +15,12 @@ class SolutionPage extends StatefulWidget {
   final String userId;
   final double? ph;
   final double? tds;
-  final double? orp;
   final double? turbidity;
   const SolutionPage({
     Key? key,
     required this.userId,
     this.ph,
     this.tds,
-    this.orp,
     this.turbidity,
   }) : super(key: key);
 
@@ -34,11 +32,9 @@ class _SolutionPageState extends State<SolutionPage> {
   late String userId;
   late double ph;
   late double tds;
-  late double orp;
   late double turbidity;
   late Color phColor;
   late Color tdsColor;
-  late Color orpColor;
   late Color turbidityColor;
 
   @override
@@ -47,11 +43,9 @@ class _SolutionPageState extends State<SolutionPage> {
     userId = widget.userId;
     ph = widget.ph!;
     tds = widget.tds!;
-    orp = widget.orp!;
     turbidity = widget.turbidity!;
     phColor = getDangerLevelph(ph);
     tdsColor = getDangerLeveltds(tds);
-    orpColor = getDangerLevelorp(orp);
     turbidityColor = getDangerLevelturbidity(turbidity);
   }
 
@@ -69,16 +63,6 @@ class _SolutionPageState extends State<SolutionPage> {
     if (value >= 50 && value <= 150) {
       return AppColor.kSafeColor;
     } else if (value >= 151 && value <= 250) {
-      return AppColor.kWarningColor;
-    } else {
-      return AppColor.kDangerColor;
-    }
-  }
-
-  Color getDangerLevelorp(double value) {
-    if (value >= 300 && value <= 400) {
-      return AppColor.kSafeColor;
-    } else if (value >= 401 && value <= 600) {
       return AppColor.kWarningColor;
     } else {
       return AppColor.kDangerColor;
@@ -167,7 +151,7 @@ class _SolutionPageState extends State<SolutionPage> {
                   fontFamily: 'Poppins',
                 ),
               ),
-              SizedBox(height: 20), //40 //60
+              SizedBox(height: 40), //40 //60
               Row(
                 children: [
                   Expanded(
@@ -175,13 +159,6 @@ class _SolutionPageState extends State<SolutionPage> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        SolutionDot(
-                          isActive: true,
-                        ),
-                        DottedLine(
-                          direction: Axis.vertical,
-                          lineLength: 103,
-                        ),
                         SolutionDot(
                           isActive: true,
                         ),
@@ -225,14 +202,6 @@ class _SolutionPageState extends State<SolutionPage> {
                         ),
                         SolutionCardDetail(
                           userId: userId,
-                          title: 'Tingkat ORP',
-                          pointColor: orpColor,
-                          value: orp,
-                          isActive: true,
-                          step: 3,
-                        ),
-                        SolutionCardDetail(
-                          userId: userId,
                           title: 'Tingkat pH',
                           pointColor: phColor,
                           value: ph,
@@ -244,7 +213,7 @@ class _SolutionPageState extends State<SolutionPage> {
                   ),
                 ],
               ),
-              const SizedBox(height: 80),
+              const SizedBox(height: 102),
               PageButton(
                 text: 'Retest Water!',
                 onTap: () {
@@ -299,9 +268,7 @@ class SolutionCardDetail extends StatelessWidget {
       //if title is Nitrate Levels or Chlorine Levels the string will be "${value} pmm" else it will be "${value
       value: title == 'Tingkat TDS'
           ? '${value} PPM'
-          : (title == 'Tingkat ORP'
-              ? '$value mv'
-              : (title == 'Tingkat Kekeruhan' ? '$value %' : value.toString())),
+          : (title == 'Tingkat Kekeruhan' ? '$value NTU' : value.toString()),
       onTap: () {
         Navigator.push(
           context,

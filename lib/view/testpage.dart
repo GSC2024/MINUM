@@ -6,6 +6,7 @@ import 'package:gsc2024/view/components/testdetail.dart';
 import 'package:gsc2024/view/components/watercup.dart';
 import 'package:gsc2024/view/homepage.dart';
 import 'package:gsc2024/view/solutionpage.dart';
+import '../features/calculation/data_calculation.dart';
 import '../features/data_fetch/data_service.dart';
 import '../features/data_save/sensor_data_service.dart';
 import '../features/user_data.dart';
@@ -25,11 +26,13 @@ class _TestPageState extends State<TestPage> {
   UserData? userData;
   late Timer _timer;
   late bool butt = false;
+  late double formulaResult;
 
   @override
   void initState() {
     super.initState();
     userId = widget.userId;
+    formulaResult = 0;
     _fetchData(userId);
     _timer = Timer.periodic(Duration(seconds: 1), (Timer timer) {
       if (timer.tick >= 10) {
@@ -52,8 +55,16 @@ class _TestPageState extends State<TestPage> {
     try {
       if (userId != null) {
         UserData? fetchedUserData = await _dataService.fetchData(userId);
+        double overallFormulaResult = calculateOverallFormula(
+          fetchedUserData?.ph ?? 0, // Assuming ph is a property of UserData
+          fetchedUserData?.tds ?? 0, // Assuming tds is a property of UserData
+          fetchedUserData?.turbidity ??
+              0, // Assuming turbidity is a property of UserData
+        );
+
         setState(() {
           userData = fetchedUserData;
+          formulaResult = overallFormulaResult;
         });
 
         print('User Data: $userData');
@@ -125,7 +136,7 @@ class _TestPageState extends State<TestPage> {
                   Column(
                     children: [
                       Text(
-                        '80%',
+                        '${(formulaResult * 100).round()}%',
                         style: TextStyle(
                           color: AppColor.kButtonColor,
                           fontSize: 40,
@@ -149,7 +160,7 @@ class _TestPageState extends State<TestPage> {
                     children: [
                       CustomPaint(
                         painter: GlassPainter(
-                            0.7), // 80% filled //TODO: Make this the dynamic value
+                            formulaResult), // 80% filled //TODO: Make this the dynamic value
                         size: Size(150, 200), // size of the cup
                       ),
                       Text(
@@ -185,56 +196,42 @@ class _TestPageState extends State<TestPage> {
                 detailValue: userData?.tds.toString() ?? 'N/A',
               ),
               TestDetail(
-                detailTitle: 'Tingkat ORP',
+                detailTitle: 'Tingkat Turbidity',
                 pointColor: AppColor.kBackgroundColor,
-                detailValue: userData?.temperature.toString() ?? 'N/A',
+                detailValue: userData?.turbidity.toString() ?? 'N/A',
               ),
-              TestDetail(
-                detailTitle: 'Tingkat Kekeruhan',
-                pointColor: AppColor.kBackgroundColor,
-                detailValue: userData?.temperature.toString() ?? 'N/A',
-              ),
-              SizedBox(height: 100),
+              SizedBox(height: 120),
               PageButton(
                 text: 'Tangani Sekarang!',
                 buttonColor: (userData?.ph == 0 ||
                         userData?.tds == 0 ||
-                        userData?.temperature == 0 ||
-                        userData?.temperature == 0)
+                        userData?.turbidity == 0)
                     ? Color(0xFF9E9E9E)
-                    : (butt == true)
-                        ? Color(0xFF9E9E9E)
-                        : AppColor.kButtonColor,
+                    : AppColor.kButtonColor,
                 onTap: (userData?.ph == 0 ||
                         userData?.tds == 0 ||
-                        userData?.temperature == 0 ||
-                        userData?.temperature == 0)
+                        userData?.turbidity == 0)
                     ? () {}
-                    : (butt == true)
-                        ? () {}
-                        : () {
-                            if (userData != null) {
-                              saveSensorData(userId, userData!);
-                              Navigator.push(
-                                context,
-                                PageRouteBuilder(
-                                  pageBuilder: (context, animation,
-                                          secondaryAnimation) =>
+                    : () {
+                        if (userData != null) {
+                          saveSensorData(userId, userData!);
+                          Navigator.push(
+                            context,
+                            PageRouteBuilder(
+                              pageBuilder:
+                                  (context, animation, secondaryAnimation) =>
                                       SolutionPage(
-                                    userId: userId,
-                                    ph: userData?.ph?.toDouble() ?? 0,
-                                    tds: userData?.tds?.toDouble() ?? 0,
-                                    orp: userData?.temperature?.toDouble() ?? 0,
-                                    turbidity:
-                                        userData?.temperature?.toDouble() ?? 0,
-                                  ),
-                                ),
-                              );
-                            } else {
-                              print(
-                                  'UserData is null. Cannot save sensor data.');
-                            }
-                          },
+                                userId: userId,
+                                ph: userData?.ph?.toDouble() ?? 0,
+                                tds: userData?.tds?.toDouble() ?? 0,
+                                turbidity: userData?.turbidity?.toDouble() ?? 0,
+                              ),
+                            ),
+                          );
+                        } else {
+                          print('UserData is null. Cannot save sensor data.');
+                        }
+                      },
               )
             ],
           ),

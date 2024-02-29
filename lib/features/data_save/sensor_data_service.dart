@@ -9,10 +9,9 @@ import '../user_data.dart';
       DatabaseReference sensorDataRef = FirebaseDatabase.instance.ref().child(sensorDataPath);
             
       await sensorDataRef.set({
-        'EC': userData.ec,
         'PH': userData.ph,
         'TDS': userData.tds,
-        'Temperature': userData.temperature,
+        'TURBIDITY': userData.turbidity,
       });
 
       print('Sensor data saved successfully!');
