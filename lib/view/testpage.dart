@@ -7,9 +7,9 @@ import 'package:gsc2024/view/components/watercup.dart';
 import 'package:gsc2024/view/homepage.dart';
 import 'package:gsc2024/view/solutionpage.dart';
 import '../features/calculation/data_calculation.dart';
-import '../features/data_fetch/data_service.dart';
 import '../features/data_save/sensor_data_service.dart';
 import '../features/user_data.dart';
+import '../features//data_fetch/ble_service.dart'; // Import the BLE service
 import 'dart:async';
 
 class TestPage extends StatefulWidget {
@@ -22,7 +22,7 @@ class TestPage extends StatefulWidget {
 
 class _TestPageState extends State<TestPage> {
   late String userId;
-  final DataService _dataService = DataService();
+  final BleService _bleService = BleService(); // Initialize BLE service
   UserData? userData;
   late Timer _timer;
   late bool butt = false;
@@ -33,16 +33,22 @@ class _TestPageState extends State<TestPage> {
     super.initState();
     userId = widget.userId;
     formulaResult = 0;
-    _fetchData(userId);
+    _initializeBluetooth();
     _timer = Timer.periodic(Duration(seconds: 1), (Timer timer) {
       if (timer.tick >= 10) {
         timer.cancel();
         updateField(userId, false);
-        butt = true;
+        setState(() {
+          butt = true;
+        });
       } else {
-        _fetchData(userId);
+        _fetchData();
       }
     });
+  }
+
+  Future<void> _initializeBluetooth() async {
+    await _bleService.connectToDevice();
   }
 
   @override
@@ -51,26 +57,26 @@ class _TestPageState extends State<TestPage> {
     super.dispose();
   }
 
-  Future<void> _fetchData(String userId) async {
+  Future<void> _fetchData() async {
     try {
-      if (userId != null) {
-        UserData? fetchedUserData = await _dataService.fetchData(userId);
-        double overallFormulaResult = calculateOverallFormula(
-          fetchedUserData?.ph ?? 0, // Assuming ph is a property of UserData
-          fetchedUserData?.tds ?? 0, // Assuming tds is a property of UserData
-          fetchedUserData?.turbidity ??
-              0, // Assuming turbidity is a property of UserData
-        );
+      Map<String, String> data = await _bleService.readData();
 
-        setState(() {
-          userData = fetchedUserData;
-          formulaResult = overallFormulaResult;
-        });
+      double? ph = double.tryParse(data["ph"] ?? "0");
+      double? tds = double.tryParse(data["tds"] ?? "0");
+      double? turbidity = double.tryParse(data["turbidity"] ?? "0");
 
-        print('User Data: $userData');
-      } else {
-        print('User is not signed in or userId is null.');
-      }
+      double overallFormulaResult = calculateOverallFormula(
+        ph ?? 0,
+        tds ?? 0,
+        turbidity ?? 0,
+      );
+
+      setState(() {
+        userData = UserData(ph: ph, tds: tds, turbidity: turbidity);
+        formulaResult = overallFormulaResult;
+      });
+
+      print('User Data: $userData');
     } catch (error) {
       print('Error fetching data: $error');
     }
