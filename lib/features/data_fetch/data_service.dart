@@ -3,16 +3,16 @@ import '../user_data.dart';
 
 class DataService {
   Future<UserData?> fetchData() async {
-    final ref = FirebaseDatabase.instance.ref();
+    final ref = FirebaseDatabase.instance.ref().child('Sensor');
     try {
-      final snapshot = await ref.child('Sensor').get();
+      final snapshot = await ref.get();
 
       if (snapshot.exists) {
-        // Accessing sensor data with null checks
-        double? phData = snapshot.child('PH_data').value as double?;
-        double? tdsData = snapshot.child('TDS_data').value as double?;
-        double? turbyData = snapshot.child('Turby_data').value as double?;
-        double? orpData = snapshot.child('orp_data').value as double?;
+        // Handle the data and cast it properly
+        double? phData = (snapshot.child('PH_data').value as num?)?.toDouble();
+        double? tdsData = (snapshot.child('TDS_data').value as num?)?.toDouble();
+        double? turbyData = (snapshot.child('Turby_data').value as num?)?.toDouble();
+        double? orpData = (snapshot.child('orp_data').value as num?)?.toDouble();
 
         // Create and return UserData object
         return UserData(
