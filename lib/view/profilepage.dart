@@ -33,7 +33,7 @@ UserData? userData;
 Future<void> _fetchData(userId) async {
   try {
     if (userId != null) {
-      UserData? fetchedUserData = await _dataService.fetchData(userId);
+      UserData? fetchedUserData = await _dataService.fetchData();
       setState(() {
         userData = fetchedUserData;
       });
@@ -121,7 +121,7 @@ Future<void> _fetchData(userId) async {
                       Padding(
                         padding: EdgeInsets.only(top: 36),
                         child: Text(
-                          '${userData?.firstName} ${userData?.lastName}',
+                          'Test Kyran',
                           style: TextStyle(
                             color: AppColor.kTextColor,
                             fontWeight: FontWeight.w500,

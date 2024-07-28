@@ -217,10 +217,10 @@ class _SolutionPageState extends State<SolutionPage> {
               PageButton(
                 text: 'Retest Water!',
                 onTap: () {
-                  resetField(userId, "PH", 0);
-                  resetField(userId, "EC", 0);
-                  resetField(userId, "TDS", 0);
-                  resetField(userId, "Temperature", 0);
+                  resetField("PH_data", 0);
+                  resetField("orp_data", 0);
+                  resetField("TDS_data", 0);
+                  resetField("Turby_data", 0);
                   Navigator.push(
                     context,
                     PageRouteBuilder(

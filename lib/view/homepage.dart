@@ -33,7 +33,7 @@ class _HomePageState extends State<HomePage> {
   Future<void> _fetchData(userId) async {
     try {
       if (userId != null) {
-        UserData? fetchedUserData = await _dataService.fetchData(userId);
+        UserData? fetchedUserData = await _dataService.fetchData();
         setState(() {
           userData = fetchedUserData;
         });
@@ -80,7 +80,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       SizedBox(height: 4),
                       Text(
-                        "${userData?.firstName} ${userData?.lastName}",
+                        "Test Kyran",
                         style: TextStyle(
                           color: AppColor.kTextColor,
                           fontWeight: FontWeight.w500,
@@ -123,7 +123,7 @@ class _HomePageState extends State<HomePage> {
               //     ?
               AfterConnectPage(
                 onTap: () {
-                  updateField(userId, true);
+                  updateField(true);
                   Navigator.push(
                   context,
                   MaterialPageRoute(

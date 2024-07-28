@@ -37,7 +37,7 @@ class _TestPageState extends State<TestPage> {
     _timer = Timer.periodic(Duration(seconds: 1), (Timer timer) {
       if (timer.tick >= 10) {
         timer.cancel();
-        updateField(userId, false);
+        updateField(false);
         butt = true;
       } else {
         _fetchData(userId);
@@ -54,7 +54,7 @@ class _TestPageState extends State<TestPage> {
   Future<void> _fetchData(String userId) async {
     try {
       if (userId != null) {
-        UserData? fetchedUserData = await _dataService.fetchData(userId);
+        UserData? fetchedUserData = await _dataService.fetchData();
         double overallFormulaResult = calculateOverallFormula(
           fetchedUserData?.ph ?? 0, // Assuming ph is a property of UserData
           fetchedUserData?.tds ?? 0, // Assuming tds is a property of UserData
@@ -214,7 +214,7 @@ class _TestPageState extends State<TestPage> {
                     ? () {}
                     : () {
                         if (userData != null) {
-                          saveSensorData(userId, userData!);
+                          saveSensorData(userData!);
                           Navigator.push(
                             context,
                             PageRouteBuilder(
