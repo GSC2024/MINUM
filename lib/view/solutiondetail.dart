@@ -116,9 +116,9 @@ Steps:
             ''';
       }
     } else if (title == 'Tingkat Kekeruhan') {
-      if (value <= 20) {
+      if (value <= 5) {
         return 'Tingkat Kekeruhan layak untuk diminum!';
-      } else if (value <= 40) {
+      } else if (value <= 7) {
         return '''
 Boiling
 
