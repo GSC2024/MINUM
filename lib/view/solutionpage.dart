@@ -70,9 +70,9 @@ class _SolutionPageState extends State<SolutionPage> {
   }
 
   Color getDangerLevelturbidity(double value) {
-    if (value <= 20) {
+    if (value <= 5) {
       return AppColor.kSafeColor;
-    } else if (value <= 40) {
+    } else if (value <= 7) {
       return AppColor.kWarningColor;
     } else {
       return AppColor.kDangerColor;
