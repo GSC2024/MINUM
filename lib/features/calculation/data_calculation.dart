@@ -25,7 +25,7 @@ double calculateTurbidityPercentage(double turbidity) {
     return 100;
   } else if (turbidity <= 30) {
     return 80;
-  } else if (turbidity > 90) {
+  } else if (turbidity <= 90) {
     return 40;
   } else if (turbidity > 90) {
     return 0;
@@ -34,10 +34,28 @@ double calculateTurbidityPercentage(double turbidity) {
   }
 }
 
-double calculateOverallFormula(double pH, double tds, double turbidity) {
+double calculateORPPercentage(double orp) {
+  // Define ORP ranges and percentage mapping
+  if (orp >= 300 && orp <= 500) {
+    return 100; // Ideal ORP range
+  } else if (orp >= 100 && orp < 200) {
+    return 80; // Good ORP range
+  } else if (orp >= 0 && orp < 100) {
+    return 40; // Poor ORP range
+  } else if (orp < 0 || orp > 500) {
+    return 0; // Out of acceptable ORP range
+  } else {
+    return -1; // Invalid ORP value
+  }
+}
+
+double calculateOverallFormula(
+    double pH, double tds, double turbidity, double orp) {
   double phPercent = calculatePHPercentage(pH);
   double tdsPercent = calculateTDSPercentage(tds);
   double turbidityPercent = calculateTurbidityPercentage(turbidity);
+  double orpPercent = calculateORPPercentage(orp);
 
-  return (phPercent + tdsPercent + turbidityPercent) / 300;
+  // Compute overall formula as the average of percentages
+  return (phPercent + tdsPercent + turbidityPercent + orpPercent) / 400;
 }

@@ -128,9 +128,11 @@ class _HomePageState extends State<HomePage> {
                   context,
                   MaterialPageRoute(
                     builder: (context) => TestPage(userId: userId),
+                
                   ),
                 );
-              } 
+              },
+              userId: userId, 
               )
               // : HomeCard(
               //     cardText: 'Sambungi \nAlat Sekarang!',

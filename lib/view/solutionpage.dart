@@ -16,12 +16,14 @@ class SolutionPage extends StatefulWidget {
   final double? ph;
   final double? tds;
   final double? turbidity;
+  final double? orp; // Added ORP parameter
   const SolutionPage({
     Key? key,
     required this.userId,
     this.ph,
     this.tds,
     this.turbidity,
+    this.orp, // Added ORP parameter
   }) : super(key: key);
 
   @override
@@ -33,9 +35,11 @@ class _SolutionPageState extends State<SolutionPage> {
   late double ph;
   late double tds;
   late double turbidity;
+  late double orp; // Added ORP field
   late Color phColor;
   late Color tdsColor;
   late Color turbidityColor;
+  late Color orpColor; // Added ORP color
 
   @override
   void initState() {
@@ -44,11 +48,14 @@ class _SolutionPageState extends State<SolutionPage> {
     ph = widget.ph!;
     tds = widget.tds!;
     turbidity = widget.turbidity!;
+    orp = widget.orp!; // Initialize ORP
     phColor = getDangerLevelph(ph);
     tdsColor = getDangerLeveltds(tds);
     turbidityColor = getDangerLevelturbidity(turbidity);
+    orpColor = getDangerLevelOrp(orp); // Initialize ORP color
   }
 
+  // Determine the color for pH
   Color getDangerLevelph(double value) {
     if (value >= 6.5 && value <= 8.5) {
       return AppColor.kSafeColor;
@@ -59,6 +66,7 @@ class _SolutionPageState extends State<SolutionPage> {
     }
   }
 
+  // Determine the color for TDS
   Color getDangerLeveltds(double value) {
     if (value >= 50 && value <= 150) {
       return AppColor.kSafeColor;
@@ -69,6 +77,7 @@ class _SolutionPageState extends State<SolutionPage> {
     }
   }
 
+  // Determine the color for turbidity
   Color getDangerLevelturbidity(double value) {
     if (value <= 20) {
       return AppColor.kSafeColor;
@@ -76,6 +85,17 @@ class _SolutionPageState extends State<SolutionPage> {
       return AppColor.kWarningColor;
     } else {
       return AppColor.kDangerColor;
+    }
+  }
+
+  // Determine the color for ORP
+  Color getDangerLevelOrp(double value) {
+    if (value >= 200 && value <= 400) {
+      return AppColor.kSafeColor; // Ideal ORP range
+    } else if (value >= 100 && value < 200) {
+      return AppColor.kWarningColor; // Moderate ORP range
+    } else {
+      return AppColor.kDangerColor; // Out of acceptable range
     }
   }
 
@@ -208,6 +228,14 @@ class _SolutionPageState extends State<SolutionPage> {
                           isActive: true,
                           step: 4,
                         ),
+                        SolutionCardDetail(
+                          userId: userId,
+                          title: 'Tingkat ORP',
+                          pointColor: orpColor,
+                          value: orp,
+                          isActive: true,
+                          step: 4,
+                        ),
                       ],
                     ),
                   ),
@@ -221,6 +249,8 @@ class _SolutionPageState extends State<SolutionPage> {
                   resetField(userId, "EC", 0);
                   resetField(userId, "TDS", 0);
                   resetField(userId, "Temperature", 0);
+                  resetField(userId, "ORP", 0);
+                  resetField(userId, "Turbidity", 0);
                   Navigator.push(
                     context,
                     PageRouteBuilder(

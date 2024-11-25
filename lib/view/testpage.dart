@@ -58,7 +58,8 @@ class _TestPageState extends State<TestPage> {
         double overallFormulaResult = calculateOverallFormula(
           fetchedUserData?.ph ?? 0, // Assuming ph is a property of UserData
           fetchedUserData?.tds ?? 0, // Assuming tds is a property of UserData
-          fetchedUserData?.turbidity ??
+          fetchedUserData?.turbidity ?? 0,
+          fetchedUserData?.orp ??
               0, // Assuming turbidity is a property of UserData
         );
 
@@ -200,21 +201,28 @@ class _TestPageState extends State<TestPage> {
                 pointColor: AppColor.kBackgroundColor,
                 detailValue: userData?.turbidity.toString() ?? 'N/A',
               ),
+              TestDetail(
+                detailTitle: 'Tingkat ORP',
+                pointColor: AppColor.kBackgroundColor,
+                detailValue: userData?.orp.toString() ?? 'N/A',
+              ),
               SizedBox(height: 120),
               PageButton(
                 text: 'Tangani Sekarang!',
                 buttonColor: (userData?.ph == 0 ||
                         userData?.tds == 0 ||
-                        userData?.turbidity == 0)
+                        userData?.turbidity == 0 ||
+                        userData?.orp == 0)
                     ? Color(0xFF9E9E9E)
                     : AppColor.kButtonColor,
                 onTap: (userData?.ph == 0 ||
                         userData?.tds == 0 ||
-                        userData?.turbidity == 0)
+                        userData?.turbidity == 0 ||
+                        userData?.orp == 0)
                     ? () {}
                     : () {
                         if (userData != null) {
-                          saveSensorData(userId, userData!);
+                          saveSensorData(userId, userData!, formulaResult);
                           Navigator.push(
                             context,
                             PageRouteBuilder(
@@ -225,6 +233,7 @@ class _TestPageState extends State<TestPage> {
                                 ph: userData?.ph?.toDouble() ?? 0,
                                 tds: userData?.tds?.toDouble() ?? 0,
                                 turbidity: userData?.turbidity?.toDouble() ?? 0,
+                                orp: userData?.orp?.toDouble() ?? 0,
                               ),
                             ),
                           );
